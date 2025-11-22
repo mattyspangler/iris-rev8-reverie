@@ -26,7 +26,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 \
     python3-pip \
     python3-venv \
-    git-core && \
+    git-core \
+    librsvg2-bin \
+    imagemagick && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY entry.sh .

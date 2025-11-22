@@ -1,0 +1,65 @@
+# Keymap-drawer configuration for Iris Rev 8 keymap
+# This configuration optimizes the output for your specific layout and RGB colors
+
+parse_config:
+  # Custom layer names for better display
+  layer_legend_map:
+    "0": "QWERTY"
+    "1": "NUM" 
+    "2": "SYM/NAV"
+    "3": "MEDIA/MOUSE"
+    "4": "GAMING"
+    "5": "MACRO"
+
+draw_config:
+  # Key dimensions (adjust for aesthetics)
+  key_h: 50
+  key_w: 50
+  
+  # Multi-column layout for better layer organization
+  n_columns: 2
+  
+  # Enable dark mode for modern look
+  dark_mode: true
+  
+  # Footer with layer information
+  footer_text: "Iris Rev 8 - reverie"
+  
+  # Custom CSS styling for layer-specific background colors matching RGB lighting
+  svg_extra_style: |
+    /* Layer-specific background colors matching RGB lighting */
+    .layer-0 rect.key { fill: #9b59b6; }  /* Purple (QWERTY) */
+    .layer-1 rect.key { fill: #e74c3c; }  /* Red (NUM) */
+    .layer-2 rect.key { fill: #3498db; }  /* Azure (SYM/NAV) */
+    .layer-3 rect.key { fill: #f39c12; }  /* Orange (MEDIA/MOUSE) */
+    .layer-4 rect.key { fill: #2980b9; }  /* Blue (GAMING) */
+    .layer-5 rect.key { fill: #ecf0f1; }  /* White (MACRO) */
+    
+    /* Make transparent keys have reduced opacity */
+    rect.ghost { 
+      fill: #666666; 
+      opacity: 0.3; 
+    }
+    
+    /* Better contrast for text on colored backgrounds */
+    text.label { 
+      fill: #ffffff; 
+      font-weight: bold;
+    }
+    
+    /* Held/accent keys */
+    rect.held { 
+      fill: #ff6b6b; 
+      opacity: 0.8; 
+    }
+    
+    /* Combo styling */
+    rect.combo { 
+      fill: #4ecdc4; 
+      opacity: 0.7; 
+    }
+  
+  # Combo settings (if you add combos later)
+  combo_h: 20
+  combo_w: 40
+  separate_combo_diagrams: true

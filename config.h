@@ -1,4 +1,5 @@
-// Copyright 2023 Matthew Spangler (@matthewspangler)
+// Reverie keymap
+// Author: Matthew Spangler, github.com/mattyspangler
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #pragma once

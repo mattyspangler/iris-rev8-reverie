@@ -1,7 +1,11 @@
-// Copyright 2023 Matthew Spangler (@matthewspangler)
+// Reverie keymap
+// Author: Matthew Spangler, github.com/mattyspangler
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include QMK_KEYBOARD_H
+
+// Reverie keymap for Keebio Iris Rev 8
+// A productivity-focused layout with RGB lighting and tap dance functionality
 
 enum custom_keycodes {
     TURBO = SAFE_RANGE,
