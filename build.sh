@@ -1,3 +1,5 @@
+#!/bin/bash
+
 REPOSRC="https://github.com/qmk/qmk_firmware"
 LOCALREPO=qmk_firmware
 # We do it this way so that we can abstract if from just git later on
@@ -9,6 +11,7 @@ mkdir -p ./build-volume/custom-keymap
 cp keymap.c ./build-volume/custom-keymap/
 cp rules.mk ./build-volume/custom-keymap/
 cp config.h ./build-volume/custom-keymap/
+cp entry.sh ./build-volume/
 chmod a+x ./build-volume/entry.sh
 
 echo "Creating build-output folder"
@@ -29,7 +32,7 @@ fi
 cd ../..
 
 echo "Building container"
-podman build -t qmkbuild .
+podman build -t qmkbuild -f Containerfile .
 
 echo "Running container"
 podman run -v ./build-volume:/build-volume:z --rm localhost/qmkbuild

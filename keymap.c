@@ -80,7 +80,7 @@ enum {
     MORE_TAPS
 };
 
-static tap_state_t tap_state[10];
+static tap_state_t tap_state[5];
 
 uint8_t get_tap_dance_step(tap_dance_state_t *state);
 
@@ -248,11 +248,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐                                        ┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐
        KC_TRNS,          KC_F1,          KC_F2,          KC_F3,          KC_F4,          KC_F5,                                                   KC_F6,          KC_F7,          KC_F8,          KC_F9,          KC_F10,         KC_F11,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
-       KC_TRNS,          KC_TRNS,        KC_TRNS,        KC_MS_UP,       KC_TRNS,        KC_TRNS,                                                 KC_TRNS,        KC_7,           KC_8,           KC_9,           KC_PLUS,        KC_F12,
+       KC_TRNS,          KC_TRNS,        KC_TRNS,        MS_UP,          KC_TRNS,        KC_TRNS,                                                 KC_TRNS,        KC_7,           KC_8,           KC_9,           KC_PLUS,        KC_F12,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
-       KC_CAPS,          KC_TRNS,        KC_MS_LEFT,     KC_MS_DOWN,     KC_MS_RIGHT,    KC_TRNS,                                                 KC_TRNS,        KC_4,           KC_5,           KC_6,           KC_MINS,        KC_PAUS,
+       KC_CAPS,          KC_TRNS,        MS_LEFT,        MS_DOWN,        MS_RGHT,        KC_TRNS,                                                 KC_TRNS,        KC_4,           KC_5,           KC_6,           KC_MINS,        KC_PAUS,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┐        ┌───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
-       KC_TRNS,          KC_TRNS,        KC_MS_BTN1,     KC_MS_BTN3,     KC_MS_BTN2,     KC_TRNS,        KC_TRNS,                 KC_TRNS,        KC_1,           KC_2,           KC_3,           KC_EQL,         KC_TRNS,        KC_TRNS,
+       KC_TRNS,          KC_TRNS,        MS_BTN1,        MS_BTN3,        MS_BTN2,        KC_TRNS,        KC_TRNS,                 KC_TRNS,        KC_1,           KC_2,           KC_3,           KC_EQL,         KC_TRNS,        KC_TRNS,
     //└───────────────┴───────────────┴───────────────┴───────────────┼───────────────┼───────────────┼───────────────┘        └───────────────┼───────────────┼───────────────┼───────────────┴───────────────┴───────────────┴───────────────┘
                                                                          KC_TRNS,        KC_TRNS,        KC_0,                    KC_0,           KC_DOT,         KC_TRNS
     //                                                                └───────────────┴───────────────┴───────────────┘        └───────────────┴───────────────┴───────────────┘
@@ -276,11 +276,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐                                        ┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐
        KC_TRNS,          KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,                                                 KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
-       KC_TRNS,          KC_TRNS,        KC_TRNS,        KC_MS_UP,       KC_TRNS,        KC_TRNS,                                                 KC_TRNS,        KC_WH_U,        KC_MS_U,        KC_WH_D,        KC_TRNS,        KC_TRNS,
+       KC_TRNS,          KC_TRNS,        KC_TRNS,        MS_UP,          KC_TRNS,        KC_TRNS,                                                 KC_TRNS,        MS_WHLU,        MS_WHLU,        MS_WHLD,        KC_TRNS,        KC_TRNS,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
-       KC_TRNS,          KC_TRNS,        KC_MS_LEFT,     KC_MS_DOWN,     KC_MS_RIGHT,    KC_TRNS,                                                 KC_TRNS,        KC_WH_L,        KC_MS_D,        KC_WH_R,        KC_TRNS,        KC_TRNS,
+       KC_TRNS,          KC_TRNS,        MS_LEFT,        MS_DOWN,        MS_RGHT,        KC_TRNS,                                                 KC_TRNS,        MS_WHLL,        MS_WHLD,        MS_WHLR,        KC_TRNS,        KC_TRNS,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┐        ┌───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
-       KC_TRNS,          KC_TRNS,        KC_MS_BTN1,     KC_MS_BTN3,     KC_MS_BTN2,     KC_TRNS,        KC_TRNS,                 KC_TRNS,        KC_BTN1,        KC_BTN3,        KC_BTN2,        KC_TRNS,        KC_TRNS,        KC_TRNS,
+       KC_TRNS,          KC_TRNS,        MS_BTN1,        MS_BTN3,        MS_BTN2,        KC_TRNS,        KC_TRNS,                 KC_TRNS,        MS_BTN1,        MS_BTN3,        MS_BTN2,        KC_TRNS,        KC_TRNS,        KC_TRNS,
     //└───────────────┴───────────────┴───────────────┴───────────────┼───────────────┼───────────────┼───────────────┘        └───────────────┼───────────────┼───────────────┼───────────────┴───────────────┴───────────────┴───────────────┘
                                                                          TO_SN,          KC_TRNS,        KC_TRNS,                 KC_TRNS,        TO_GM,          KC_TRNS
     //                                                                └───────────────┴───────────────┴───────────────┘        └───────────────┴───────────────┴───────────────┘
@@ -536,17 +536,15 @@ layer_state_t default_layer_state_set_user(layer_state_t state) {
 layer_state_t layer_state_set_user(layer_state_t state) {
     rgblight_set_layer_state(1, layer_state_cmp(state, _NUM));
     rgblight_set_layer_state(2, layer_state_cmp(state, _SYM_NAV));
-    rgblight_set_layer_state(3, layer_state_cmp(state, _SYM_NAV));
-    rgblight_set_layer_state(4, layer_state_cmp(state, _MEDIA_MOUSE));
-    rgblight_set_layer_state(5, layer_state_cmp(state, _MEDIA_MOUSE));
-    rgblight_set_layer_state(6, layer_state_cmp(state, _GAMING));
-    rgblight_set_layer_state(7, layer_state_cmp(state, _MACRO));
+    rgblight_set_layer_state(3, layer_state_cmp(state, _MEDIA_MOUSE));
+    rgblight_set_layer_state(4, layer_state_cmp(state, _GAMING));
+    rgblight_set_layer_state(5, layer_state_cmp(state, _MACRO));
     return state;
 }
 
-int counter;
-int c1;
-int c2;
+static int counter = 0;
+static int c1;
+static int c2;
 
 void do_jiggle(void) {
     counter = counter + 1;
@@ -555,13 +553,13 @@ void do_jiggle(void) {
     c2 = counter % 37;
     if (c1 == 0) {
         SEND_STRING(SS_DELAY(10000));
-        tap_code(KC_MS_UP);
-        tap_code(KC_MS_DOWN);
+        tap_code(MS_UP);
+        tap_code(MS_DOWN);
     }
     if (c2 == 0) {
         SEND_STRING(SS_DELAY(30000));
-        tap_code(KC_MS_LEFT);
-        tap_code(KC_MS_RIGHT);
+        tap_code(MS_LEFT);
+        tap_code(MS_RGHT);
     }
     if (counter == 1000) {
         counter = 0;
@@ -574,7 +572,6 @@ void matrix_init_user(void) {
 void matrix_scan_user(void) {
     if (jiggle_macro) {
         do_jiggle();
-    } else {
     }
 }
 

@@ -22,8 +22,11 @@
 
 #define RGBLIGHT_DEFAULT_MODE RGBLIGHT_MODE_STATIC_LIGHT
 
-#define RGB_MATRIX_LED_COUNT 68
 #define RGBLED_NUM 68
+
+#ifndef RGBLIGHT_LED_COUNT
+#define RGBLIGHT_LED_COUNT RGBLED_NUM
+#endif
 
 // #define TAPPING_TOGGLE 1 // tap just once for TT() to toggle the layer
 #define TAPPING_TERM 200
