@@ -12,6 +12,13 @@ enum custom_keycodes {
 bool jiggle_macro = false;
 bool turbo_macro = false;
 
+// Layer system - IMPORTANT: Follow this pattern when adding new layers
+// 1. Add new layer enum entry here with _PREFIX format (e.g., _NEWLAYER)
+// 2. Add corresponding layer alias below (e.g., #define NEW_LAYER _NEWLAYER)
+// 3. Add RGB layer definition with HSV color in keymap-drawer-config.yaml
+// 4. Add layer to keymaps[] array in the correct order
+// 5. Add RGB light layer to MY_LIGHT_LAYERS array
+// 6. Add layer case to layer_state_set_user() function
 enum iris_layers {
     _BASE,        
     _FUNCTION,    
