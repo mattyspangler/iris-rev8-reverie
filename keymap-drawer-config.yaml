@@ -12,7 +12,7 @@ draw_config:
   n_columns: 2
   
   # Enable dark mode for modern look
-  dark_mode: false
+  dark_mode: true
   
   # Footer with layer information
   footer_text: "Iris Rev 8 - reverie"
@@ -39,6 +39,8 @@ draw_config:
     svg.keymap g.layer-BASE text,
     svg.keymap g.layer-NUMBERS text {
       fill: #ffffff !important;
+      font-weight: bold !important;
+      font-size: 14px !important;
     }
     svg.keymap g.layer-FUNCTION text,
     svg.keymap g.layer-SYMBOLS text,
@@ -46,6 +48,8 @@ draw_config:
     svg.keymap g.layer-GAMING text,
     svg.keymap g.layer-MACRO text {
       fill: #000000 !important;
+      font-weight: bold !important;
+      font-size: 14px !important;
     }
     
     /* Held/accent keys */

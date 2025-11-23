@@ -14,7 +14,7 @@ readonly QMK_KEYMAP="reverie"
 readonly QMK_LAYOUT="LAYOUT"
 
 # Extract layer names from keymap.c enum (remove _ prefix and trailing punctuation)
-readonly LAYER_NAMES=$(awk '/enum iris_layers {/,/^}/ { if (/^\s*_[A-Z_]+[,;]/) print substr($1, 2, length($1)-2) }' "$CUSTOM_KEYMAP_DIR/keymap.c" | tr '\n' ' ' | sed 's/ $//')
+readonly LAYER_NAMES=$(awk '/enum iris_layers {/,/^}/ { if (/_[A-Z_]+[,;]/) print $1 }' "$CUSTOM_KEYMAP_DIR/keymap.c" | sed 's/^_//' | sed 's/,$//' | tr '\n' ' ' | sed 's/ $//')
 
 log() {
     echo "$*"
