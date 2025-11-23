@@ -46,7 +46,7 @@ enum iris_layers {
 // Custom HSV colors matching keymap-drawer-config.yaml
 #define HSV_BASE_PURPLE 24, 255, 255      // #9300ff - Star Platinum Purple
 #define HSV_FUNCTION_GREEN 83, 255, 238   // #0fee00 - Squeeze Toy Alien  
-#define HSV_NUMBERS_BLUE 0, 255, 255      // #2000ff - Blue Pencil
+#define HSV_NUMBERS_BLUE 240, 255, 255     // #2000ff - Blue Pencil
 #define HSV_SYMBOLS_RED 0, 255, 255        // #ff0000 - Red
 #define HSV_SYSTEM_YELLOW 44, 255, 255   // #f6ff00 - Busy Bee
 #define HSV_GAMING_TURQUOISE 178, 255, 255 // #00fff4 - Turquoise Blue
@@ -81,9 +81,9 @@ enum tap_dance_codes {
     TD_RALT_ENT,  // Right Alt or Enter
     TD_LCTL_ESC,  // Left Control or Escape
     TD_LSPC,      // Left GUI or Space
-    TD_1_L1,      // 1 tap, double-hold to switch to NUM layer
-    TD_2_L2,      // 2 tap, double-hold to switch to NUM layer
-    TD_3_L3,      // 3 tap, double-hold to switch to SYS layer
+    TD_1_L1,      // 1 tap, double-hold to switch to FUNCTION layer
+    TD_2_L2,      // 2 tap, double-hold to switch to NUMBERS layer
+    TD_3_L3,      // 3 tap, double-hold to switch to SYSTEM layer
     TD_4_L4,      // 4 tap, double-hold to switch to GAMING layer
     TD_5_L5,      // 5 tap, double-hold to switch to MACRO layer
 };
@@ -103,7 +103,7 @@ enum {
     MORE_TAPS
 };
 
-static tap_state_t tap_state[5];
+static tap_state_t tap_state[5]; // Array for 5 number tap dances (TD_1_L1 through TD_5_L5)
 
 uint8_t get_tap_dance_step(tap_dance_state_t *state);
 
@@ -119,7 +119,7 @@ uint8_t get_tap_dance_step(tap_dance_state_t *state) {
     return MORE_TAPS;
 }
 
-// Tap dance for number 1 - tap for 1, double-hold for NUM layer
+// Tap dance for number 1 - tap for 1, double-hold for FUNCTION layer
 void dance_1_finished(tap_dance_state_t *state, void *user_data);
 void dance_1_reset(tap_dance_state_t *state, void *user_data);
 
@@ -167,7 +167,7 @@ void dance_2_reset(tap_dance_state_t *state, void *user_data) {
     tap_state[1].step = 0;
 }
 
-// Tap dance for number 3 - tap for 3, double-hold for MEDIA_MOUSE layer
+// Tap dance for number 3 - tap for 3, double-hold for SYSTEM layer
 void dance_3_finished(tap_dance_state_t *state, void *user_data);
 void dance_3_reset(tap_dance_state_t *state, void *user_data);
 
@@ -200,7 +200,7 @@ void dance_4_finished(tap_dance_state_t *state, void *user_data) {
     switch (tap_state[3].step) {
         case SINGLE_TAP: register_code16(KC_4); break;
         case DOUBLE_TAP: register_code16(KC_4); register_code16(KC_4); break;
-        case DOUBLE_HOLD: layer_move(GAMING_LAYER); break;
+        case DOUBLE_HOLD: layer_move(_GAMING); break;
         case DOUBLE_SINGLE_TAP: tap_code16(KC_4); register_code16(KC_4); break;
     }
 }
@@ -224,7 +224,7 @@ void dance_5_finished(tap_dance_state_t *state, void *user_data) {
     switch (tap_state[4].step) {
         case SINGLE_TAP: register_code16(KC_5); break;
         case DOUBLE_TAP: register_code16(KC_5); register_code16(KC_5); break;
-        case DOUBLE_HOLD: layer_move(MACRO_LAYER); break;
+        case DOUBLE_HOLD: layer_move(_MACRO); break;
         case DOUBLE_SINGLE_TAP: tap_code16(KC_5); register_code16(KC_5); break;
     }
 }
@@ -245,11 +245,11 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_RALT_ENT]  = ACTION_TAP_DANCE_DOUBLE(KC_RALT, KC_ENT),
     [TD_LCTL_ESC]  = ACTION_TAP_DANCE_DOUBLE(KC_LCTL, KC_ESC),
     [TD_LSPC]      = ACTION_TAP_DANCE_DOUBLE(KC_LGUI, KC_SPC),
-    [TD_1_L1]      = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_1_finished, dance_1_reset),
-    [TD_2_L2]      = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_2_finished, dance_2_reset),
-    [TD_3_L3]      = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_3_finished, dance_3_reset),
-    [TD_4_L4]      = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_4_finished, dance_4_reset),
-    [TD_5_L5]      = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_5_finished, dance_5_reset),
+    [TD_1_L1]      = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_1_finished, dance_1_reset),  // 1 tap, double-hold for FUNCTION layer
+    [TD_2_L2]      = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_2_finished, dance_2_reset),  // 2 tap, double-hold for NUMBERS layer
+    [TD_3_L3]      = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_3_finished, dance_3_reset),  // 3 tap, double-hold for SYSTEM layer
+    [TD_4_L4]      = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_4_finished, dance_4_reset),  // 4 tap, double-hold for GAMING layer
+    [TD_5_L5]      = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_5_finished, dance_5_reset),  // 5 tap, double-hold for MACRO layer
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -550,6 +550,7 @@ layer_state_t default_layer_state_set_user(layer_state_t state) {
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
+    rgblight_set_layer_state(0, layer_state_cmp(state, _BASE));
     rgblight_set_layer_state(1, layer_state_cmp(state, _FUNCTION));
     rgblight_set_layer_state(2, layer_state_cmp(state, _NUMBERS));
     rgblight_set_layer_state(3, layer_state_cmp(state, _SYMBOLS));

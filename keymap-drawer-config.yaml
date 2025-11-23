@@ -36,17 +36,30 @@ draw_config:
     
     /* Better contrast for text on colored backgrounds */
     /* Add new layers here: svg.keymap g.layer-NEWLAYER text { fill: #000000; } */
-    svg.keymap g.layer-BASE text,
-    svg.keymap g.layer-NUMBERS text {
+    
+    /* Layer title styling - GitHub-friendly colors */
+    text.label {
+      fill: #ffffff !important;
+      font-weight: bold !important;
+      font-size: 16px !important;
+      font-family: Arial, sans-serif !important;
+      stroke: #000000 !important;
+      stroke-width: 3px !important;
+      paint-order: stroke !important;
+    }
+    
+    /* Key text styling by layer (excluding labels) */
+    svg.keymap g.layer-BASE text:not(.label),
+    svg.keymap g.layer-NUMBERS text:not(.label) {
       fill: #ffffff !important;
       font-weight: bold !important;
       font-size: 14px !important;
     }
-    svg.keymap g.layer-FUNCTION text,
-    svg.keymap g.layer-SYMBOLS text,
-    svg.keymap g.layer-SYSTEM text,
-    svg.keymap g.layer-GAMING text,
-    svg.keymap g.layer-MACRO text {
+    svg.keymap g.layer-FUNCTION text:not(.label),
+    svg.keymap g.layer-SYMBOLS text:not(.label),
+    svg.keymap g.layer-SYSTEM text:not(.label),
+    svg.keymap g.layer-GAMING text:not(.label),
+    svg.keymap g.layer-MACRO text:not(.label) {
       fill: #000000 !important;
       font-weight: bold !important;
       font-size: 14px !important;
