@@ -66,14 +66,30 @@ generate_keymap_visualizations() {
     log "Converting QMK C keymap to JSON..."
     qmk c2json -kb keebio/iris/rev8 -km reverie -o /tmp/keymap.json
 
-    # 2. Parse JSON to a YAML file with only logical layers
+    # 2. Parse JSON to a YAML file to extract layer names dynamically
     log "Parsing logical layers from JSON..."
     keymap parse \
         -q /tmp/keymap.json \
-        --layer-names QWERTY NUM SYM_NAV MEDIA_MOUSE GAMING MACRO \
         -o /tmp/logical_layers.yaml
 
-    # 3. Manually construct a complete and valid keymap YAML
+    # 3. Extract layer names from the generated YAML file
+    log "Extracting layer names from YAML..."
+    local layer_names
+    layer_names=$(grep -E "^\s*[A-Z_]+:" /tmp/logical_layers.yaml | \
+                  sed 's/^\s*\([^:]*\):.*/\1/' | \
+                  tr '\n' ' ' | \
+                  sed 's/ $//')
+
+    log "Found layers: $layer_names"
+
+    # 4. Re-parse with explicit layer names for keymap-drawer compatibility
+    log "Re-parsing with explicit layer names..."
+    keymap parse \
+        -q /tmp/keymap.json \
+        --layer-names $layer_names \
+        -o /tmp/logical_layers_with_names.yaml
+
+    # 5. Manually construct a complete and valid keymap YAML
     log "Constructing final keymap YAML..."
     local final_keymap_yaml="$BUILD_OUTPUT_DIR/final_keymap.yaml"
     cat > "$final_keymap_yaml" << EOF
@@ -82,8 +98,8 @@ layout:
   layout_name: LAYOUT
 EOF
     
-    # Extract only the layers section from logical_layers.yaml
-    sed -n '/^layers:/,$p' /tmp/logical_layers.yaml >> "$final_keymap_yaml"
+    # Extract only the layers section from logical_layers_with_names.yaml
+    sed -n '/^layers:/,$p' /tmp/logical_layers_with_names.yaml >> "$final_keymap_yaml"
 
     # 4. Draw the keymap using the final YAML and styling from the config file
     log "Drawing complete keymap visualization..."
@@ -97,8 +113,7 @@ EOF
 
     # Generate individual layer images
     log "Drawing individual layer visualizations..."
-    local layers="QWERTY NUM SYM_NAV MEDIA_MOUSE GAMING MACRO"
-    for layer_name in $layers; do
+    for layer_name in $layer_names; do
         local layer_svg="$ASSETS_DIR/keymap-${layer_name,,}.svg"
         local layer_png="$ASSETS_DIR/keymap-${layer_name,,}-layer.png"
 

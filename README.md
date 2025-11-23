@@ -23,8 +23,8 @@ My Keebio Iris Rev 8 custom keymap called "Reverie" -- a productivity-focused la
 #### Tap Dance Functions
 - **`~` (grave)**: Single tap for `~`, double tap for `Esc`
 - **`1`**: Single tap for `1`, double-hold to switch to NUM layer
-- **`2`**: Single tap for `2`, double-hold to switch to SYM/NAV layer  
-- **`3`**: Single tap for `3`, double-hold to switch to MEDIA/MOUSE layer
+- **`2`**: Single tap for `2`, double-hold to switch to NUM layer  
+- **`3`**: Single tap for `3`, double-hold to switch to SYS layer
 - **`4`**: Single tap for `4`, double-hold to switch to GAMING layer
 - **`5`**: Single tap for `5`, double-hold to switch to MACRO layer
 - **`Left Shift`**: Single tap for shift, double tap for `Caps Lock`
@@ -33,7 +33,7 @@ My Keebio Iris Rev 8 custom keymap called "Reverie" -- a productivity-focused la
 - **`Right Alt`**: Single tap for Alt, double tap for `Enter`
 
 #### Momentary Layers
-- **`[` (left bracket)**: Hold for temporary SYM/NAV layer access
+- **`[` (left bracket)**: Hold for temporary NUM layer access
 - **`]` (right bracket)**: Hold for temporary NUM layer access
 
 ### NUM (Layer 1) - Red
@@ -43,15 +43,14 @@ My Keebio Iris Rev 8 custom keymap called "Reverie" -- a productivity-focused la
 - **Navigation arrows**: Integrated into the main typing area
 - **Mouse keys**: Basic mouse controls (clicks and movement)
 
-
-### SYM/NAV (Layer 2) - Azure
+### SYM (Layer 2) - Azure
 
 - **Left side**: Symbol characters ( ! @ # $ % ^ & * ( ) )
 - **Right side**: Navigation cluster (arrows, home, end, page up/down, insert, delete)
 - **Brackets**: Programming brackets ( [ ] { } < > ) and additional symbols
 
 
-### MEDIA/MOUSE (Layer 3) - Orange/Yellow
+### SYS (Layer 3) - Orange/Yellow
 
 - **Mouse controls**: Precise mouse movement, scrolling (wheel up/down), and all mouse buttons
 - **Media keys**: Play/pause, next/previous track, volume controls

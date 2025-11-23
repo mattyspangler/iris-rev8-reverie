@@ -8,43 +8,48 @@ draw_config:
   n_columns: 2
   
   # Enable dark mode for modern look
-  dark_mode: true
+  dark_mode: false
   
   # Footer with layer information
   footer_text: "Iris Rev 8 - reverie"
   
   # Custom CSS styling for layer-specific background colors matching RGB lighting
   svg_extra_style: |
-    /* Layer-specific background colors matching RGB lighting */
-    .layer-0 rect.key { fill: #9b59b6; }  /* Purple (QWERTY) */
-    .layer-1 rect.key { fill: #e74c3c; }  /* Red (NUM) */
-    .layer-2 rect.key { fill: #3498db; }  /* Azure (SYM/NAV) */
-    .layer-3 rect.key { fill: #f39c12; }  /* Orange (MEDIA/MOUSE) */
-    .layer-4 rect.key { fill: #2980b9; }  /* Blue (GAMING) */
-    .layer-5 rect.key { fill: #ecf0f1; }  /* White (MACRO) */
+    svg.keymap g.layer-BASE rect.key { fill: #9300ff !important; stroke: #9300ff !important; } /* Star Platinum Purple */ 
+    svg.keymap g.layer-FUNCTION rect.key { fill: #0fee00 !important; stroke: #0fee00 !important; }  /* Squeeze Toy Alien */ 
+    svg.keymap g.layer-NUMBERS rect.key { fill: #2000ff !important; stroke: #2000ff !important; }  /* Blue Pencil */ 
+    svg.keymap g.layer-SYMBOLS rect.key { fill: #ff0000 !important; stroke: #ff0000 !important; } /* Red */ 
+    svg.keymap g.layer-SYSTEM rect.key { fill: #f6ff00 !important; stroke: #f6ff00 !important; } /* Busy Bee */
+    svg.keymap g.layer-GAMING rect.key { fill: #00fff4 !important; stroke: #00fff4 !important; } /* Turquoise Blue */ 
+    svg.keymap g.layer-MACRO rect.key { fill: #ff008e !important; stroke: #ff008e !important; } /* Pink Panther */
     
     /* Make transparent keys have reduced opacity */
     rect.ghost { 
-      fill: #666666; 
-      opacity: 0.3; 
+      fill: #666666 !important; 
+      opacity: 0.3 !important; 
     }
     
     /* Better contrast for text on colored backgrounds */
-    text.label { 
-      fill: #ffffff; 
-      font-weight: bold;
+    svg.keymap g.layer-BASE text,
+    svg.keymap g.layer-FUNCTION text,
+    svg.keymap g.layer-NUMBERS text,
+    svg.keymap g.layer-SYMBOLS text,
+    svg.keymap g.layer-SYSTEM text,
+    svg.keymap g.layer-GAMING text,
+    svg.keymap g.layer-MACRO text {
+      fill: #ffffff !important;
     }
     
     /* Held/accent keys */
     rect.held { 
-      fill: #ff6b6b; 
-      opacity: 0.8; 
+      fill: #ff6b6b !important; 
+      opacity: 0.8 !important; 
     }
     
     /* Combo styling */
     rect.combo { 
-      fill: #4ecdc4; 
-      opacity: 0.7; 
+      fill: #4ecdc4 !important; 
+      opacity: 0.7 !important; 
     }
   
   # Combo settings (if you add combos later)

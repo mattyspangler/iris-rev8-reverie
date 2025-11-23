@@ -1,11 +1,8 @@
-// Reverie keymap
+// Reverie keymap for Iris Rev 8 split ortholinear keyboard
 // Author: Matthew Spangler, github.com/mattyspangler
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include QMK_KEYBOARD_H
-
-// Reverie keymap for Keebio Iris Rev 8
-// A productivity-focused layout with RGB lighting and tap dance functionality
 
 enum custom_keycodes {
     TURBO = SAFE_RANGE,
@@ -16,36 +13,49 @@ bool jiggle_macro = false;
 bool turbo_macro = false;
 
 enum iris_layers {
-    _QWERTY,
-    _NUM,
-    _SYM_NAV,
-    _MEDIA_MOUSE,
-    _GAMING,
-    _MACRO,
+    _BASE,        
+    _FUNCTION,    
+    _NUMBERS,     
+    _SYMBOLS,     
+    _SYSTEM,      
+    _GAMING,      
+    _MACRO,       
 };
 
 // Layer Aliases
-#define QWERTY_LAYER _QWERTY
-#define NUM_LAYER _NUM
-#define SYM_NAV_LAYER _SYM_NAV
-#define MEDIA_MOUSE_LAYER _MEDIA_MOUSE
+#define QWERTY_LAYER _BASE
+#define FN_LAYER _FUNCTION
+#define NUM_LAYER _NUMBERS
+#define SYM_LAYER _SYMBOLS
+#define SYS_LAYER _SYSTEM
 #define GAMING_LAYER _GAMING
 #define MACRO_LAYER _MACRO
 
 // Transparent key for readability
 #define _______ KC_TRNS
 
+// Custom HSV colors matching keymap-drawer-config.yaml
+#define HSV_BASE_PURPLE 24, 255, 255      // #9300ff - Star Platinum Purple
+#define HSV_FUNCTION_GREEN 83, 255, 238   // #0fee00 - Squeeze Toy Alien  
+#define HSV_NUMBERS_BLUE 0, 255, 255      // #2000ff - Blue Pencil
+#define HSV_SYMBOLS_RED 0, 255, 255        // #ff0000 - Red
+#define HSV_SYSTEM_YELLOW 44, 255, 255   // #f6ff00 - Busy Bee
+#define HSV_GAMING_TURQUOISE 178, 255, 255 // #00fff4 - Turquoise Blue
+#define HSV_MACRO_PINK 79, 255, 255      // #ff008e - Pink Panther
+
 // Layer toggling and momentary keys
 #define TO_QW TO(QWERTY_LAYER)
+#define TO_FN TO(FN_LAYER)
 #define TO_NU TO(NUM_LAYER)
-#define TO_SN TO(SYM_NAV_LAYER)
-#define TO_MM TO(MEDIA_MOUSE_LAYER)
+#define TO_SY TO(SYM_LAYER)
+#define TO_MM TO(SYS_LAYER)
 #define TO_GM TO(GAMING_LAYER)
 #define TO_MA TO(MACRO_LAYER)
 
+#define MO_FN MO(FN_LAYER)
 #define MO_NU MO(NUM_LAYER)
-#define MO_SN MO(SYM_NAV_LAYER)
-#define MO_MM MO(MEDIA_MOUSE_LAYER)
+#define MO_SY MO(SYM_LAYER)
+#define MO_MM MO(SYS_LAYER)
 #define MO_GM MO(GAMING_LAYER)
 #define MO_MA MO(MACRO_LAYER)
 
@@ -63,8 +73,8 @@ enum tap_dance_codes {
     TD_LCTL_ESC,  // Left Control or Escape
     TD_LSPC,      // Left GUI or Space
     TD_1_L1,      // 1 tap, double-hold to switch to NUM layer
-    TD_2_L2,      // 2 tap, double-hold to switch to SYM_NAV layer
-    TD_3_L3,      // 3 tap, double-hold to switch to MEDIA_MOUSE layer
+    TD_2_L2,      // 2 tap, double-hold to switch to NUM layer
+    TD_3_L3,      // 3 tap, double-hold to switch to SYS layer
     TD_4_L4,      // 4 tap, double-hold to switch to GAMING layer
     TD_5_L5,      // 5 tap, double-hold to switch to MACRO layer
 };
@@ -109,7 +119,7 @@ void dance_1_finished(tap_dance_state_t *state, void *user_data) {
     switch (tap_state[0].step) {
         case SINGLE_TAP: register_code16(KC_1); break;
         case DOUBLE_TAP: register_code16(KC_1); register_code16(KC_1); break;
-        case DOUBLE_HOLD: layer_move(NUM_LAYER); break;
+        case DOUBLE_HOLD: layer_move(_FUNCTION); break;
         case DOUBLE_SINGLE_TAP: tap_code16(KC_1); register_code16(KC_1); break;
     }
 }
@@ -124,7 +134,7 @@ void dance_1_reset(tap_dance_state_t *state, void *user_data) {
     tap_state[0].step = 0;
 }
 
-// Tap dance for number 2 - tap for 2, double-hold for SYM_NAV layer
+// Tap dance for number 2 - tap for 2, double-hold for NUM layer
 void dance_2_finished(tap_dance_state_t *state, void *user_data);
 void dance_2_reset(tap_dance_state_t *state, void *user_data);
 
@@ -133,7 +143,7 @@ void dance_2_finished(tap_dance_state_t *state, void *user_data) {
     switch (tap_state[1].step) {
         case SINGLE_TAP: register_code16(KC_2); break;
         case DOUBLE_TAP: register_code16(KC_2); register_code16(KC_2); break;
-        case DOUBLE_HOLD: layer_move(SYM_NAV_LAYER); break;
+        case DOUBLE_HOLD: layer_move(_NUMBERS); break;
         case DOUBLE_SINGLE_TAP: tap_code16(KC_2); register_code16(KC_2); break;
     }
 }
@@ -157,7 +167,7 @@ void dance_3_finished(tap_dance_state_t *state, void *user_data) {
     switch (tap_state[2].step) {
         case SINGLE_TAP: register_code16(KC_3); break;
         case DOUBLE_TAP: register_code16(KC_3); register_code16(KC_3); break;
-        case DOUBLE_HOLD: layer_move(MEDIA_MOUSE_LAYER); break;
+        case DOUBLE_HOLD: layer_move(_SYSTEM); break;
         case DOUBLE_SINGLE_TAP: tap_code16(KC_3); register_code16(KC_3); break;
     }
 }
@@ -234,7 +244,7 @@ tap_dance_action_t tap_dance_actions[] = {
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [QWERTY_LAYER] = LAYOUT(
+    [_BASE] = LAYOUT(
     //┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐                                        ┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐
        TD(TD_GRV_ESC),   TD(TD_1_L1),    TD(TD_2_L2),    TD(TD_3_L3),    TD(TD_4_L4),    TD(TD_5_L5),                                             KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           KC_BSPC,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
@@ -244,11 +254,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┐        ┌───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
        TD(TD_LCTL_ESC),  KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,           KC_LBRC,                 KC_RBRC,        KC_N,           KC_M,           KC_COMM,        KC_DOT,         KC_SLSH,      TD(TD_RALT_ENT),
     //└───────────────┴───────────────┴───────────────┴───────────────┼───────────────┼───────────────┼───────────────┘        └───────────────┼───────────────┼───────────────┼───────────────┴───────────────┴───────────────┴───────────────┘
-                                                                         MO_SN,          TD(TD_LSPC),    KC_SPC,                  KC_SPC,         MO_NU,          TO_MA
+                                                                         MO_FN,          TD(TD_LSPC),    KC_SPC,                  KC_SPC,         MO_SY,          TO_MA
     //                                                                └───────────────┴───────────────┴───────────────┘        └───────────────┴───────────────┴───────────────┘
     ),
 
-    [NUM_LAYER] = LAYOUT(
+    [_FUNCTION] = LAYOUT(
     //┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐                                        ┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐
        KC_TRNS,          KC_F1,          KC_F2,          KC_F3,          KC_F4,          KC_F5,                                                   KC_F6,          KC_F7,          KC_F8,          KC_F9,          KC_F10,         KC_F11,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
@@ -262,7 +272,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //                                                                └───────────────┴───────────────┴───────────────┘        └───────────────┴───────────────┴───────────────┘
     ),
 
-    [SYM_NAV_LAYER] = LAYOUT(
+    [_NUMBERS] = LAYOUT(
     //┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐                                        ┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐
        KC_TRNS,          KC_EXLM,        KC_AT,          KC_HASH,        KC_DLR,         KC_PERC,                                                 KC_CIRC,        KC_AMPR,        KC_ASTR,        KC_LPRN,        KC_RPRN,        KC_BSPC,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
@@ -272,11 +282,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┐        ┌───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
        KC_TRNS,          KC_TRNS,        KC_LCBR,        KC_RCBR,        KC_LBRC,        KC_RBRC,        KC_TRNS,                 KC_TRNS,        KC_MINS,        KC_EQL,         KC_SLSH,        KC_BSLS,        KC_QUOT,        KC_TRNS,
     //└───────────────┴───────────────┴───────────────┴───────────────┼───────────────┼───────────────┼───────────────┘        └───────────────┼───────────────┼───────────────┼───────────────┴───────────────┴───────────────┴───────────────┘
-                                                                         TO_QW,          KC_TRNS,        KC_TRNS,                 KC_TRNS,        MO_MM,          KC_TRNS
+                                                                         TO_QW,          KC_TRNS,        KC_TRNS,                 KC_TRNS,        MO_SY,          KC_TRNS
     //                                                                └───────────────┴───────────────┴───────────────┘        └───────────────┴───────────────┴───────────────┘
     ),
 
-    [MEDIA_MOUSE_LAYER] = LAYOUT(
+    [_SYMBOLS] = LAYOUT(
+    //┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐                                        ┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐
+       KC_TRNS,          KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,                                                 KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,
+    //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
+       KC_TRNS,          KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,                                                 KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,
+    //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
+       KC_TRNS,          KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,                                                 KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,
+    //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┐        ┌───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
+       KC_TRNS,          KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,                 KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,
+    //└───────────────┴───────────────┴───────────────┴───────────────┼───────────────┼───────────────┼───────────────┘        └───────────────┼───────────────┼───────────────┼───────────────┴───────────────┴───────────────┴───────────────┘
+                                                                         TO(_BASE),         KC_TRNS,        KC_TRNS,                 KC_TRNS,        TO(_BASE),        KC_TRNS
+    //                                                                └───────────────┴───────────────┴───────────────┘        └───────────────┴───────────────┴───────────────┘
+    ),
+
+    [_SYSTEM] = LAYOUT(
     //┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐                                        ┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐
        KC_TRNS,          KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,                                                 KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
@@ -286,11 +310,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┐        ┌───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
        KC_TRNS,          KC_TRNS,        MS_BTN1,        MS_BTN3,        MS_BTN2,        KC_TRNS,        KC_TRNS,                 KC_TRNS,        MS_BTN1,        MS_BTN3,        MS_BTN2,        KC_TRNS,        KC_TRNS,        KC_TRNS,
     //└───────────────┴───────────────┴───────────────┴───────────────┼───────────────┼───────────────┼───────────────┘        └───────────────┼───────────────┼───────────────┼───────────────┴───────────────┴───────────────┴───────────────┘
-                                                                         TO_SN,          KC_TRNS,        KC_TRNS,                 KC_TRNS,        TO_GM,          KC_TRNS
+                                                                         TO(_FUNCTION),          KC_TRNS,        KC_TRNS,                 KC_TRNS,        TO(_GAMING),          KC_TRNS
     //                                                                └───────────────┴───────────────┴───────────────┘        └───────────────┴───────────────┴───────────────┘
     ),
 
-    [GAMING_LAYER] = LAYOUT(
+    [_GAMING] = LAYOUT(
     //┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐                                        ┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐
        KC_ESC,           KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                                                    KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           KC_BSPC,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
@@ -300,11 +324,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┐        ┌───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
        KC_LCTL,          KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,           KC_LBRC,                 KC_RBRC,        KC_N,           KC_M,           KC_COMM,        KC_DOT,         KC_SLSH,        KC_ENT,
     //└───────────────┴───────────────┴───────────────┴───────────────┼───────────────┼───────────────┼───────────────┘        └───────────────┼───────────────┼───────────────┼───────────────┴───────────────┴───────────────┴───────────────┘
-                                                                         KC_LGUI,        TO_MM,          KC_SPC,                  KC_SPC,         TO_MA,          KC_RALT
+        KC_LGUI,        TO_MM,          KC_SPC,                  KC_SPC,         TO_MA,          KC_RALT
     //                                                                └───────────────┴───────────────┴───────────────┘        └───────────────┴───────────────┴───────────────┘
     ),
 
-    [MACRO_LAYER] = LAYOUT(
+    [_MACRO] = LAYOUT(
     //┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐                                        ┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐
        _______,          _______,        _______,        _______,        _______,        TURBO,                                                   _______,        _______,        _______,        _______,        QK_BOOT,        EE_CLR,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
@@ -314,7 +338,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┐        ┌───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
        _______,          _______,        _______,        _______,        _______,        _______,        _______,                 _______,        _______,        _______,        _______,        _______,        _______,        _______,
     //└───────────────┴───────────────┴───────────────┴───────────────┼───────────────┼───────────────┼───────────────┘        └───────────────┼───────────────┼───────────────┼───────────────┴───────────────┴───────────────┴───────────────┘
-                                                                         _______,        TO_GM,          _______,                 _______,        TO_QW,          _______
+                                                                         _______,        TO(_GAMING),          _______,                 _______,        TO_QW,          _______
     //                                                                └───────────────┴───────────────┴───────────────┘        └───────────────┴───────────────┴───────────────┘
     )
 };
@@ -343,186 +367,165 @@ LED index mapping:
 
 */
 
-const rgblight_segment_t PROGMEM QWERTY_LIGHT_LAYER[] = RGBLIGHT_LAYER_SEGMENTS(
-    // left side
-    {0, 6, HSV_PURPLE},
-    {6, 6, HSV_PURPLE},
-    {12, 6, HSV_PURPLE},
-    {18, 6, HSV_PURPLE},
-    {24, 1, HSV_PURPLE},
-    {25, 1, HSV_PURPLE},
-    {26, 1, HSV_PURPLE},
-    {27, 1, HSV_PURPLE},
-    {28, 3, HSV_PURPLE}, // underglow
-    {31, 3, HSV_PURPLE}, // underglow
+const rgblight_segment_t PROGMEM BASE_LIGHT_LAYER[] = RGBLIGHT_LAYER_SEGMENTS(
+    // left side - Base purple (Star Platinum Purple: #9300ff = HSV(280,255,255))
+    {0, 6, HSV_BASE_PURPLE},
+    {6, 6, HSV_BASE_PURPLE},
+    {12, 6, HSV_BASE_PURPLE},
+    {18, 6, HSV_BASE_PURPLE},
+    {24, 1, HSV_BASE_PURPLE},
+    {25, 1, HSV_BASE_PURPLE},
+    {26, 1, HSV_BASE_PURPLE},
+    {27, 1, HSV_BASE_PURPLE},
+    {28, 3, HSV_BASE_PURPLE}, // underglow
+    {31, 3, HSV_BASE_PURPLE}, // underglow
     // right side
-    {34, 6, HSV_PURPLE},
-    {40, 6, HSV_PURPLE},
-    {46, 6, HSV_PURPLE},
-    {52, 6, HSV_PURPLE},
-    {58, 1, HSV_PURPLE},
-    {59, 1, HSV_PURPLE},
-    {60, 1, HSV_PURPLE},
-    {61, 1, HSV_PURPLE},
-    {62, 3, HSV_PURPLE}, // underglow
-    {65, 3, HSV_PURPLE} // underglow
+    {34, 6, HSV_BASE_PURPLE},
+    {40, 6, HSV_BASE_PURPLE},
+    {46, 6, HSV_BASE_PURPLE},
+    {52, 6, HSV_BASE_PURPLE},
+    {58, 1, HSV_BASE_PURPLE},
+    {59, 1, HSV_BASE_PURPLE},
+    {60, 1, HSV_BASE_PURPLE},
+    {61, 1, HSV_BASE_PURPLE},
+    {62, 3, HSV_BASE_PURPLE}, // underglow
+    {65, 3, HSV_BASE_PURPLE} // underglow
 );
 
-const rgblight_segment_t PROGMEM FN_LIGHT_LAYER[] = RGBLIGHT_LAYER_SEGMENTS(
-    // left side
-    {0, 6, HSV_RED},
-    {6, 6, HSV_RED},
-    {12, 6, HSV_RED},
-    {18, 6, HSV_RED},
-    {24, 4, HSV_RED},
-    {28, 3, HSV_RED}, // underglow
-    {31, 3, HSV_RED}, // underglow
+const rgblight_segment_t PROGMEM FUNCTION_LIGHT_LAYER[] = RGBLIGHT_LAYER_SEGMENTS(
+    // left side - Function green (Squeeze Toy Alien: #0fee00 = HSV(83,255,238))
+    {0, 6, HSV_FUNCTION_GREEN},
+    {6, 6, HSV_FUNCTION_GREEN},
+    {12, 6, HSV_FUNCTION_GREEN},
+    {18, 6, HSV_FUNCTION_GREEN},
+    {24, 4, HSV_FUNCTION_GREEN},
+    {28, 3, HSV_FUNCTION_GREEN}, // underglow
+    {31, 3, HSV_FUNCTION_GREEN}, // underglow
     // right side
-    {34, 6, HSV_RED},
-    {40, 6, HSV_RED},
-    {46, 6, HSV_RED},
-    {52, 6, HSV_RED},
-    {58, 1, HSV_RED},
-    {59, 1, HSV_RED},
-    {60, 2, HSV_RED},
-    {62, 3, HSV_RED}, // underglow
-    {65, 3, HSV_RED} // underglow
+    {34, 6, HSV_FUNCTION_GREEN},
+    {40, 6, HSV_FUNCTION_GREEN},
+    {46, 6, HSV_FUNCTION_GREEN},
+    {52, 6, HSV_FUNCTION_GREEN},
+    {58, 1, HSV_FUNCTION_GREEN},
+    {59, 1, HSV_FUNCTION_GREEN},
+    {60, 2, HSV_FUNCTION_GREEN},
+    {62, 3, HSV_FUNCTION_GREEN}, // underglow
+    {65, 3, HSV_FUNCTION_GREEN} // underglow
 );
 
-const rgblight_segment_t PROGMEM SYM_LIGHT_LAYER[] = RGBLIGHT_LAYER_SEGMENTS(
-    // left side
-    {0, 6, HSV_AZURE},
-    {6, 6, HSV_AZURE},
-    {12, 6, HSV_AZURE},
-    {18, 6, HSV_AZURE},
-    {24, 4, HSV_AZURE},
-    {28, 3, HSV_AZURE}, // underglow
-    {31, 3, HSV_AZURE}, // underglow
+const rgblight_segment_t PROGMEM NUMBERS_LIGHT_LAYER[] = RGBLIGHT_LAYER_SEGMENTS(
+    // left side - Numbers blue (Blue Pencil: #2000ff = HSV(240,255,255))
+    {0, 6, HSV_NUMBERS_BLUE},
+    {6, 6, HSV_NUMBERS_BLUE},
+    {12, 6, HSV_NUMBERS_BLUE},
+    {18, 6, HSV_NUMBERS_BLUE},
+    {24, 4, HSV_NUMBERS_BLUE},
+    {28, 3, HSV_NUMBERS_BLUE}, // underglow
+    {31, 3, HSV_NUMBERS_BLUE}, // underglow
     // right side
-    {34, 6, HSV_AZURE},
-    {40, 6, HSV_AZURE},
-    {46, 6, HSV_AZURE},
-    {52, 6, HSV_AZURE},
-    {58, 2, HSV_AZURE},
-    {60, 1, HSV_AZURE},
-    {61, 1, HSV_AZURE},
-    {62, 3, HSV_AZURE}, // underglow
-    {65, 3, HSV_AZURE} // underglow
+    {34, 6, HSV_NUMBERS_BLUE},
+    {40, 6, HSV_NUMBERS_BLUE},
+    {46, 6, HSV_NUMBERS_BLUE},
+    {52, 6, HSV_NUMBERS_BLUE},
+    {58, 2, HSV_NUMBERS_BLUE},
+    {60, 1, HSV_NUMBERS_BLUE},
+    {61, 1, HSV_NUMBERS_BLUE},
+    {62, 3, HSV_NUMBERS_BLUE}, // underglow
+    {65, 3, HSV_NUMBERS_BLUE} // underglow
 );
 
-const rgblight_segment_t PROGMEM NAV_LIGHT_LAYER[] = RGBLIGHT_LAYER_SEGMENTS(
-    // left side
-    {0, 6, HSV_GREEN},
-    {6, 6, HSV_GREEN},
-    {12, 6, HSV_GREEN},
-    {18, 6, HSV_GREEN},
-    {24, 1, HSV_GREEN},
-    {25, 1, HSV_GREEN},
-    {26, 2, HSV_GREEN},
-    {28, 3, HSV_GREEN}, // underglow
-    {31, 3, HSV_GREEN}, // underglow
+const rgblight_segment_t PROGMEM SYMBOLS_LIGHT_LAYER[] = RGBLIGHT_LAYER_SEGMENTS(
+    // left side - Symbols red (Red: #ff0000 = HSV(0,255,255))
+    {0, 6, HSV_SYMBOLS_RED},
+    {6, 6, HSV_SYMBOLS_RED},
+    {12, 6, HSV_SYMBOLS_RED},
+    {18, 6, HSV_SYMBOLS_RED},
+    {24, 4, HSV_SYMBOLS_RED},
+    {28, 3, HSV_SYMBOLS_RED}, // underglow
+    {31, 3, HSV_SYMBOLS_RED}, // underglow
     // right side
-    {34, 6, HSV_GREEN},
-    {40, 6, HSV_GREEN},
-    {46, 1, HSV_GREEN},
-    {47, 5, HSV_GREEN},
-    {52, 6, HSV_GREEN},
-    {58, 4, HSV_GREEN},
-    {62, 3, HSV_GREEN}, // underglow
-    {65, 3, HSV_GREEN} // underglow
+    {34, 6, HSV_SYMBOLS_RED},
+    {40, 6, HSV_SYMBOLS_RED},
+    {46, 6, HSV_SYMBOLS_RED},
+    {52, 6, HSV_SYMBOLS_RED},
+    {58, 4, HSV_SYMBOLS_RED},
+    {60, 2, HSV_SYMBOLS_RED},
+    {61, 2, HSV_SYMBOLS_RED},
+    {62, 3, HSV_SYMBOLS_RED}, // underglow
+    {65, 3, HSV_SYMBOLS_RED} // underglow
 );
 
-const rgblight_segment_t PROGMEM MOUSE_LIGHT_LAYER[] = RGBLIGHT_LAYER_SEGMENTS(
-    // left side
-    {0, 6, HSV_ORANGE},
-    {6, 6, HSV_ORANGE},
-    {12, 6, HSV_ORANGE},
-    {18, 6, HSV_ORANGE},
-    {24, 2, HSV_ORANGE},
-    {26, 1, HSV_ORANGE},
-    {27, 1, HSV_ORANGE},
-    {28, 3, HSV_ORANGE}, // underglow
-    {31, 3, HSV_ORANGE}, // underglow
+const rgblight_segment_t PROGMEM SYSTEM_LIGHT_LAYER[] = RGBLIGHT_LAYER_SEGMENTS(
+    // left side - System yellow (Busy Bee: #f6ff00 = HSV(61,255,255))
+    {0, 6, HSV_SYSTEM_YELLOW},
+    {6, 6, HSV_SYSTEM_YELLOW},
+    {12, 6, HSV_SYSTEM_YELLOW},
+    {18, 6, HSV_SYSTEM_YELLOW},
+    {24, 2, HSV_SYSTEM_YELLOW},
+    {26, 1, HSV_SYSTEM_YELLOW},
+    {27, 1, HSV_SYSTEM_YELLOW},
+    {28, 3, HSV_SYSTEM_YELLOW}, // underglow
+    {31, 3, HSV_SYSTEM_YELLOW}, // underglow
     // right side
-    {34, 6, HSV_ORANGE},
-    {40, 6, HSV_ORANGE},
-    {46, 6, HSV_ORANGE},
-    {52, 6, HSV_ORANGE},
-    {58, 4, HSV_ORANGE},
-    {62, 3, HSV_ORANGE}, // underglow
-    {65, 3, HSV_ORANGE} // underglow
-);
-
-const rgblight_segment_t PROGMEM MEDIA_LIGHT_LAYER[] = RGBLIGHT_LAYER_SEGMENTS(
-    // left side
-    {0, 6, HSV_YELLOW},
-    {6, 6, HSV_YELLOW},
-    {12, 6, HSV_YELLOW},
-    {18, 6, HSV_YELLOW},
-    {24, 2, HSV_YELLOW},
-    {26, 1, HSV_YELLOW},
-    {27, 1, HSV_YELLOW},
-    {28, 3, HSV_YELLOW}, // underglow
-    {31, 3, HSV_YELLOW}, // underglow
-    // right side
-    {34, 6, HSV_YELLOW},
-    {40, 6, HSV_YELLOW},
-    {46, 6, HSV_YELLOW},
-    {52, 6, HSV_YELLOW},
-    {58, 4, HSV_YELLOW},
-    {62, 3, HSV_YELLOW}, // underglow
-    {65, 3, HSV_YELLOW} // underglow
+    {34, 6, HSV_SYSTEM_YELLOW},
+    {40, 6, HSV_SYSTEM_YELLOW},
+    {46, 6, HSV_SYSTEM_YELLOW},
+    {52, 6, HSV_SYSTEM_YELLOW},
+    {58, 4, HSV_SYSTEM_YELLOW},
+    {62, 3, HSV_SYSTEM_YELLOW}, // underglow
+    {65, 3, HSV_SYSTEM_YELLOW} // underglow
 );
 
 const rgblight_segment_t PROGMEM GAMING_LIGHT_LAYER[] = RGBLIGHT_LAYER_SEGMENTS(
-    // left side
-    {0, 6, HSV_BLUE},
-    {6, 6, HSV_BLUE},
-    {12, 6, HSV_BLUE},
-    {18, 6, HSV_BLUE},
-    {24, 2, HSV_BLUE},
-    {26, 1, HSV_BLUE},
-    {27, 1, HSV_BLUE},
-    {28, 3, HSV_BLUE}, // underglow
-    {31, 3, HSV_BLUE}, // underglow
+    // left side - Gaming turquoise (Turquoise Blue: #00fff4 = HSV(178,255,255))
+    {0, 6, HSV_GAMING_TURQUOISE},
+    {6, 6, HSV_GAMING_TURQUOISE},
+    {12, 6, HSV_GAMING_TURQUOISE},
+    {18, 6, HSV_GAMING_TURQUOISE},
+    {24, 2, HSV_GAMING_TURQUOISE},
+    {26, 1, HSV_GAMING_TURQUOISE},
+    {27, 1, HSV_GAMING_TURQUOISE},
+    {28, 3, HSV_GAMING_TURQUOISE}, // underglow
+    {31, 3, HSV_GAMING_TURQUOISE}, // underglow
     // right side
-    {34, 6, HSV_BLUE},
-    {40, 6, HSV_BLUE},
-    {46, 6, HSV_BLUE},
-    {52, 6, HSV_BLUE},
-    {58, 4, HSV_BLUE},
-    {62, 3, HSV_BLUE}, // underglow
-    {65, 3, HSV_BLUE} // underglow
+    {34, 6, HSV_GAMING_TURQUOISE},
+    {40, 6, HSV_GAMING_TURQUOISE},
+    {46, 6, HSV_GAMING_TURQUOISE},
+    {52, 6, HSV_GAMING_TURQUOISE},
+    {58, 2, HSV_GAMING_TURQUOISE},
+    {60, 1, HSV_GAMING_TURQUOISE},
+    {61, 1, HSV_GAMING_TURQUOISE},
+    {62, 3, HSV_GAMING_TURQUOISE}, // underglow
+    {65, 3, HSV_GAMING_TURQUOISE} // underglow
 );
 
 const rgblight_segment_t PROGMEM MACRO_LIGHT_LAYER[] = RGBLIGHT_LAYER_SEGMENTS(
-    // left side
-    {0, 6, HSV_WHITE},
-    {6, 6, HSV_WHITE},
-    {12, 6, HSV_WHITE},
-    {18, 6, HSV_WHITE},
-    {24, 2, HSV_WHITE},
-    {26, 1, HSV_WHITE},
-    {27, 1, HSV_WHITE},
-    {28, 3, HSV_WHITE}, // underglow
-    {31, 3, HSV_WHITE}, // underglow
+    // left side - Macro pink (Pink Panther: #ff008e = HSV(335,255,255))
+    {0, 6, HSV_MACRO_PINK},
+    {6, 6, HSV_MACRO_PINK},
+    {12, 6, HSV_MACRO_PINK},
+    {18, 6, HSV_MACRO_PINK},
+    {24, 2, HSV_MACRO_PINK},
+    {26, 1, HSV_MACRO_PINK},
+    {27, 1, HSV_MACRO_PINK},
+    {28, 3, HSV_MACRO_PINK}, // underglow
+    {31, 3, HSV_MACRO_PINK}, // underglow
     // right side
-    {34, 6, HSV_WHITE},
-    {40, 6, HSV_WHITE},
-    {46, 6, HSV_WHITE},
-    {52, 6, HSV_WHITE},
-    {58, 4, HSV_WHITE},
-    {62, 3, HSV_WHITE}, // underglow
-    {65, 3, HSV_WHITE} // underglow
+    {34, 6, HSV_MACRO_PINK},
+    {40, 6, HSV_MACRO_PINK},
+    {46, 6, HSV_MACRO_PINK},
+    {52, 6, HSV_MACRO_PINK},
+    {58, 4, HSV_MACRO_PINK},
+    {62, 3, HSV_MACRO_PINK}, // underglow
+    {65, 3, HSV_MACRO_PINK} // underglow
 );
 
 const rgblight_segment_t* const PROGMEM MY_LIGHT_LAYERS[] = RGBLIGHT_LAYERS_LIST(
-    QWERTY_LIGHT_LAYER,
-    FN_LIGHT_LAYER,
-    SYM_LIGHT_LAYER,
-    NAV_LIGHT_LAYER,
-    MOUSE_LIGHT_LAYER,
-    MEDIA_LIGHT_LAYER,
+    BASE_LIGHT_LAYER,
+    FUNCTION_LIGHT_LAYER,
+    NUMBERS_LIGHT_LAYER,
+    SYMBOLS_LIGHT_LAYER,
+    SYSTEM_LIGHT_LAYER,
     GAMING_LIGHT_LAYER,
     MACRO_LIGHT_LAYER
 );
@@ -532,17 +535,18 @@ void keyboard_post_init_user(void) {
 }
 
 layer_state_t default_layer_state_set_user(layer_state_t state) {
-    rgblight_set_layer_state(_QWERTY, layer_state_cmp(state, _QWERTY));
+    rgblight_set_layer_state(_BASE, layer_state_cmp(state, _BASE));
 
     return state;
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-    rgblight_set_layer_state(1, layer_state_cmp(state, _NUM));
-    rgblight_set_layer_state(2, layer_state_cmp(state, _SYM_NAV));
-    rgblight_set_layer_state(3, layer_state_cmp(state, _MEDIA_MOUSE));
-    rgblight_set_layer_state(4, layer_state_cmp(state, _GAMING));
-    rgblight_set_layer_state(5, layer_state_cmp(state, _MACRO));
+    rgblight_set_layer_state(1, layer_state_cmp(state, _FUNCTION));
+    rgblight_set_layer_state(2, layer_state_cmp(state, _NUMBERS));
+    rgblight_set_layer_state(3, layer_state_cmp(state, _SYMBOLS));
+    rgblight_set_layer_state(4, layer_state_cmp(state, _SYSTEM));
+    rgblight_set_layer_state(5, layer_state_cmp(state, _GAMING));
+    rgblight_set_layer_state(6, layer_state_cmp(state, _MACRO));
     return state;
 }
 
