@@ -15,7 +15,7 @@ draw_config:
   dark_mode: true
   
   # Footer with layer information
-  footer_text: "Iris Rev 8 - reverie"
+  footer_text: "Iris Rev 8 - Reverie"
   
   # Custom CSS styling for layer-specific background colors matching RGB lighting
   # Layer names must match enum names from keymap.c (without underscore prefix)
