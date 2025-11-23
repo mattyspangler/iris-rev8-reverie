@@ -150,13 +150,17 @@ rect.ghost {
 /* Better contrast for text on colored backgrounds */
 /* Add new layers here: svg.keymap g.layer-NEWLAYER text { fill: #000000; } */
 svg.keymap g.layer-BASE text,
-svg.keymap g.layer-NUMBERS text,
+svg.keymap g.layer-NUMBERS text {
+  fill: #ffffff !important;
+  font-weight: bold !important;
+  font-size: 14px !important;
+}
 svg.keymap g.layer-FUNCTION text,
 svg.keymap g.layer-SYMBOLS text,
 svg.keymap g.layer-SYSTEM text,
 svg.keymap g.layer-GAMING text,
 svg.keymap g.layer-MACRO text {
-  fill: #ffffff !important;
+  fill: #000000 !important;
   font-weight: bold !important;
   font-size: 14px !important;
 }
