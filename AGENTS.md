@@ -39,11 +39,13 @@ The build process:
 - **Containerfile** - Reproducible build environment
 - **entry.sh** - Container script with QMK compilation + visualization
 - **keymap-drawer-config.yaml** - Visualization configuration
+- **TODO.md** - Development status and troubleshooting log
 
 ### Tooling
 - **QuantumDuck/** - Ducky Script to QMK converter tool
-- **assets/** - Auto-generated keymap visualizations
+- **assets/** - Auto-generated keymap visualizations (12 files: 6 SVG + 6 PNG)
 - **build-volume/** - Container build artifacts
+- **TODO.md** - Active development log with current issues and solutions
 
 ## Keymap Architecture
 
@@ -121,15 +123,18 @@ Handles: QMK repo management, container build, compilation, UF2 generation, keym
 ## Keymap Visualization System
 
 ### Automatic Generation
-- Uses keymap-docker to convert QMK C keymap to JSON, then to SVG/PNG
-- Individual layer PNGs generated with descriptive names
+- Uses keymap-drawer to convert QMK C keymap to JSON, then to SVG/PNG
+- Individual layer PNGs generated with descriptive names using `-s` flag
 - Colors match RGB layer schemes
 - Assets automatically copied to repo root `./assets/`
+- Build produces 12 total files: 1 complete keymap + 6 individual layers (SVG + PNG each)
 
 ### Visualization Files
 - `assets/keymap.png` - Complete keyboard layout
-- `assets/keymap-{layer}.png` - Individual layer layouts
+- `assets/keymap-{layer}-layer.png` - Individual layer layouts (QWERTY, NUM, SYM_NAV, MEDIA_MOUSE, GAMING, MACRO)
 - `assets/*.svg` - Source SVG files
+
+**Note**: Individual layer generation is working correctly using `-s` flag for layer selection
 
 ## Container Dependencies
 
@@ -165,8 +170,26 @@ Handles: QMK repo management, container build, compilation, UF2 generation, keym
 - Rebuild container: `podman build -t qmkbuild -f Containerfile .`
 - Clean QMK build: `rm -rf build-volume/qmk_firmware`
 
+### Keymap-Drawer Issues
+- **Error**: "Could not find layout 'QWERTY'" - Fixed by explicitly specifying `-k keebio/iris/rev8 -l LAYOUT`
+- **Individual layer generation**: Uses `-s` flag for layer selection (not `--layers` or `-l`)
+- **Layout specification**: Always use CLI overrides to avoid layer name conflicts
+- **Working commands**: See entry.sh lines 90-93 and 105-108 for correct syntax
+
 ## Repository Context
 
 This is a mature, well-documented keyboard configuration focused on productivity and gaming. The layer system provides efficient access to symbols, navigation, and media controls while maintaining a clean base layer. The containerized build system ensures reproducible compilation, while automatic visualization generation makes the layout easily shareable and documentable.
 
 The keymap represents a sophisticated approach to split keyboard ergonomics with extensive customization and professional-grade tooling.
+
+## Current Development Status
+
+**Keymap Visualization**: ✅ **FULLY FUNCTIONAL** - Both complete keymap and individual layer visualizations are generating correctly. All 12 assets (6 SVG + 6 PNG) are produced automatically by the build system.
+
+**Recent Fixes Applied**:
+- Fixed layout specification conflicts in keymap-drawer CLI commands
+- Corrected individual layer generation to use `-s` flag instead of `--layers`
+- Added explicit `-k keebio/iris/rev8 -l LAYOUT` parameters to prevent layer/layout name confusion
+- All visualization assets now generate successfully and are copied to repo root
+
+**Reference Implementation**: The entry.sh script contains the corrected keymap-drawer commands that serve as a working reference for future modifications.

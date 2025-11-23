@@ -75,20 +75,21 @@ generate_keymap_visualizations() {
 
     # 3. Manually construct a complete and valid keymap YAML
     log "Constructing final keymap YAML..."
-    cat > /tmp/final_keymap.yaml << EOF
+    local final_keymap_yaml="$BUILD_OUTPUT_DIR/final_keymap.yaml"
+    cat > "$final_keymap_yaml" << EOF
 layout:
   qmk_keyboard: keebio/iris/rev8
   layout_name: LAYOUT
 EOF
     
     # Extract only the layers section from logical_layers.yaml
-    sed -n '/^layers:/,$p' /tmp/logical_layers.yaml >> /tmp/final_keymap.yaml
+    sed -n '/^layers:/,$p' /tmp/logical_layers.yaml >> "$final_keymap_yaml"
 
     # 4. Draw the keymap using the final YAML and styling from the config file
     log "Drawing complete keymap visualization..."
     keymap -c "$CUSTOM_KEYMAP_DIR/keymap-drawer-config.yaml" draw \
         -k keebio/iris/rev8 -l LAYOUT \
-        /tmp/final_keymap.yaml \
+        "$final_keymap_yaml" \
         -o "$ASSETS_DIR/keymap.svg"
 
     # Convert to PNG
@@ -102,9 +103,9 @@ EOF
         local layer_png="$ASSETS_DIR/keymap-${layer_name,,}-layer.png"
 
         keymap -c "$CUSTOM_KEYMAP_DIR/keymap-drawer-config.yaml" draw \
-            -k keebio/iris/rev8 -l LAYOUT --layers "$layer_name" \
-            /tmp/final_keymap.yaml \
-            -o "$layer_svg"
+            -k keebio/iris/rev8 -l LAYOUT -s "$layer_name" \
+            -o "$layer_svg" \
+            "$final_keymap_yaml"
 
         convert_svg_to_png "$layer_svg" "$layer_png"
     done
