@@ -50,12 +50,13 @@ The build process:
 ## Keymap Architecture
 
 ### Layer System (6 layers)
-1. **QWERTY (Layer 0)** - Purple RGB - Base typing with advanced tap dances
-2. **NUM (Layer 1)** - Red RGB - F-keys, numpad, basic mouse controls
-3. **SYM_NAV (Layer 2)** - Azure RGB - Symbols and navigation combined
-4. **MEDIA_MOUSE (Layer 3)** - Orange/Yellow RGB - Media controls and advanced mouse
-5. **GAMING (Layer 4)** - Blue RGB - Clean gaming layout
-6. **MACRO (Layer 5)** - White RGB - Custom utilities (TURBO, JIGGLER, reset)
+1. **BASE (Layer 0)** - Purple RGB - Base typing with advanced tap dances
+2. **FUNCTION (Layer 1)** - Green RGB - F-keys, numpad, basic mouse controls
+3. **NUMBERS (Layer 2)** - Blue RGB - Symbols and navigation combined
+4. **SYMBOLS (Layer 3)** - Red RGB - Media controls and advanced mouse
+5. **SYSTEM (Layer 4)** - Yellow RGB - System utilities and admin
+6. **GAMING (Layer 5)** - Turquoise Blue - Clean gaming layout
+7. **MACRO (Layer 6)** - Pink RGB - Custom utilities (TURBO, JIGGLER, reset)
 
 ### Special Features
 - **Tap Dance System**: Numbers 1-5 double-hold for layer switching, plus utility dances
@@ -67,7 +68,7 @@ The build process:
 
 ### RGB Architecture
 - Each keymap layer has corresponding RGB light layer
-- Specific HSV colors: QWERTY (Purple), NUM (Red), SYM_NAV (Azure), MEDIA_MOUSE (Orange), GAMING (Blue), MACRO (White)
+- Specific HSV colors: BASE (Purple), FUNCTION (Green), NUMBERS (Blue), SYMBOLS (Red), SYSTEM (Yellow), GAMING (Turquoise Blue), MACRO (Pink)
 - 68 total LEDs with detailed index mapping in comments
 - Layer state changes trigger automatic RGB updates
 
