@@ -2,7 +2,7 @@
 
 My Keebio Iris Rev 8 custom keymap called "Reverie" -- a productivity-focused layout with RGB lighting and tap dance functionality.
 
-![My Iris Rev 8](keyboard-pic.jpg "My Iris Rev 8")
+![My Iris Rev 8 alongside my other daily driver trackballs and keyboards](keyboard-pic.jpg "My Iris Rev 8")
 
 ## Features
 
