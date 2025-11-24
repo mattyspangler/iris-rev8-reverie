@@ -44,13 +44,13 @@ enum iris_layers {
 #define _______ KC_TRNS
 
 // Custom HSV colors matching keymap-drawer-config.yaml
-#define HSV_BASE_PURPLE 24, 255, 255      // #9300ff - Star Platinum Purple
-#define HSV_FUNCTION_GREEN 83, 255, 238   // #0fee00 - Squeeze Toy Alien  
-#define HSV_NUMBERS_BLUE 240, 255, 255     // #2000ff - Blue Pencil
+#define HSV_BASE_PURPLE 194, 255, 255     // #9300ff - Star Platinum Purple
+#define HSV_FUNCTION_GREEN 82, 255, 238  // #0fee00 - Squeeze Toy Alien  
+#define HSV_NUMBERS_BLUE 175, 255, 255   // #2000ff - Blue Pencil
 #define HSV_SYMBOLS_RED 0, 255, 255        // #ff0000 - Red
-#define HSV_SYSTEM_YELLOW 61, 255, 255   // #f6ff00 - Busy Bee
-#define HSV_GAMING_TURQUOISE 178, 255, 255 // #00fff4 - Turquoise Blue
-#define HSV_MACRO_PINK 79, 255, 255     // #ff008e - Pink Panther (wrapped to 0-255 range)
+#define HSV_SYSTEM_YELLOW 43, 255, 255   // #f6ff00 - Busy Bee
+#define HSV_GAMING_TURQUOISE 125, 255, 255 // #00fff4 - Turquoise Blue
+#define HSV_MACRO_PINK 231, 255, 255     // #ff008e - Pink Panther
 
 // Layer toggling and momentary keys
 #define TO_QW TO(QWERTY_LAYER)
@@ -795,7 +795,7 @@ LED index mapping:
 */
 
 const rgblight_segment_t PROGMEM BASE_LIGHT_LAYER[] = RGBLIGHT_LAYER_SEGMENTS(
-    // left side - Base purple (Star Platinum Purple: #9300ff = HSV(280,255,255))
+    // left side - Base purple (Star Platinum Purple: #9300ff = HSV(194,255,255))
     {0, 6, HSV_BASE_PURPLE},
     {6, 6, HSV_BASE_PURPLE},
     {12, 6, HSV_BASE_PURPLE},
@@ -820,7 +820,7 @@ const rgblight_segment_t PROGMEM BASE_LIGHT_LAYER[] = RGBLIGHT_LAYER_SEGMENTS(
 );
 
 const rgblight_segment_t PROGMEM FUNCTION_LIGHT_LAYER[] = RGBLIGHT_LAYER_SEGMENTS(
-    // left side - Function green (Squeeze Toy Alien: #0fee00 = HSV(83,255,238))
+    // left side - Function green (Squeeze Toy Alien: #0fee00 = HSV(82,255,238))
     {0, 6, HSV_FUNCTION_GREEN},
     {6, 6, HSV_FUNCTION_GREEN},
     {12, 6, HSV_FUNCTION_GREEN},
@@ -841,7 +841,7 @@ const rgblight_segment_t PROGMEM FUNCTION_LIGHT_LAYER[] = RGBLIGHT_LAYER_SEGMENT
 );
 
 const rgblight_segment_t PROGMEM NUMBERS_LIGHT_LAYER[] = RGBLIGHT_LAYER_SEGMENTS(
-    // left side - Numbers blue (Blue Pencil: #2000ff = HSV(240,255,255))
+    // left side - Numbers blue (Blue Pencil: #2000ff = HSV(175,255,255))
     {0, 6, HSV_NUMBERS_BLUE},
     {6, 6, HSV_NUMBERS_BLUE},
     {12, 6, HSV_NUMBERS_BLUE},
@@ -883,7 +883,7 @@ const rgblight_segment_t PROGMEM SYMBOLS_LIGHT_LAYER[] = RGBLIGHT_LAYER_SEGMENTS
 );
 
 const rgblight_segment_t PROGMEM SYSTEM_LIGHT_LAYER[] = RGBLIGHT_LAYER_SEGMENTS(
-    // left side - System yellow (Busy Bee: #f6ff00 = HSV(61,255,255))
+    // left side - System yellow (Busy Bee: #f6ff00 = HSV(43,255,255))
     {0, 6, HSV_SYSTEM_YELLOW},
     {6, 6, HSV_SYSTEM_YELLOW},
     {12, 6, HSV_SYSTEM_YELLOW},
@@ -904,7 +904,7 @@ const rgblight_segment_t PROGMEM SYSTEM_LIGHT_LAYER[] = RGBLIGHT_LAYER_SEGMENTS(
 );
 
 const rgblight_segment_t PROGMEM GAMING_LIGHT_LAYER[] = RGBLIGHT_LAYER_SEGMENTS(
-    // left side - Gaming turquoise (Turquoise Blue: #00fff4 = HSV(178,255,255))
+    // left side - Gaming turquoise (Turquoise Blue: #00fff4 = HSV(125,255,255))
     {0, 6, HSV_GAMING_TURQUOISE},
     {6, 6, HSV_GAMING_TURQUOISE},
     {12, 6, HSV_GAMING_TURQUOISE},
@@ -927,7 +927,7 @@ const rgblight_segment_t PROGMEM GAMING_LIGHT_LAYER[] = RGBLIGHT_LAYER_SEGMENTS(
 );
 
 const rgblight_segment_t PROGMEM MACRO_LIGHT_LAYER[] = RGBLIGHT_LAYER_SEGMENTS(
-    // left side - Macro pink (Pink Panther: #ff008e = HSV(335,255,255))
+    // left side - Macro pink (Pink Panther: #ff008e = HSV(231,255,255))
     {0, 6, HSV_MACRO_PINK},
     {6, 6, HSV_MACRO_PINK},
     {12, 6, HSV_MACRO_PINK},
