@@ -94,6 +94,9 @@ enum tap_dance_codes {
     TD_ENT_BSLS,   // Enter tap, double-tap and hold for backslash
     TD_BSLS_RSFT,  // Backslash tap, double-tap and hold for right shift
     TD_LCTL_GAME,  // Left Control tap, double-hold for GAMING layer
+    TD_MEDIA_PREV, // Media Previous tap, double-tap for browser back
+    TD_MEDIA_PLAY, // Media Play/Pause tap, double-tap for browser home
+    TD_MEDIA_NEXT, // Media Next tap, double-tap for browser forward
     TD_LCTL_BASE, // Left Control tap, double-hold to return to base layer
 };
 
@@ -112,7 +115,7 @@ enum {
     MORE_TAPS
 };
 
-static tap_state_t tap_state[12]; // Array for 12 tap dances
+static tap_state_t tap_state[15]; // Array for 15 tap dances
 
 uint8_t get_tap_dance_step(tap_dance_state_t *state);
 
@@ -549,6 +552,99 @@ void dance_lctl_game_reset(tap_dance_state_t *state, void *user_data) {
     tap_state[11].step = 0;
 }
 
+// Media Previous or Browser Back tap dance functions
+void on_dance_media_prev(tap_dance_state_t *state, void *user_data) {
+    if (state->count == 3) {
+        tap_code16(KC_MEDIA_PREV_TRACK);
+        tap_code16(KC_MEDIA_PREV_TRACK);
+        tap_code16(KC_MEDIA_PREV_TRACK);
+    }
+    if (state->count > 3) {
+        tap_code16(KC_MEDIA_PREV_TRACK);
+    }
+}
+
+void dance_media_prev_finished(tap_dance_state_t *state, void *user_data) {
+    tap_state[12].step = get_tap_dance_step(state);
+    switch (tap_state[12].step) {
+        case SINGLE_TAP: register_code16(KC_MEDIA_PREV_TRACK); break;
+        case DOUBLE_TAP: register_code16(KC_WWW_BACK); break;
+        case DOUBLE_SINGLE_TAP: tap_code16(KC_MEDIA_PREV_TRACK); register_code16(KC_MEDIA_PREV_TRACK);
+    }
+}
+
+void dance_media_prev_reset(tap_dance_state_t *state, void *user_data) {
+    wait_ms(10);
+    switch (tap_state[12].step) {
+        case SINGLE_TAP: unregister_code16(KC_MEDIA_PREV_TRACK); break;
+        case DOUBLE_TAP: unregister_code16(KC_WWW_BACK); break;
+        case DOUBLE_SINGLE_TAP: unregister_code16(KC_MEDIA_PREV_TRACK); break;
+    }
+    tap_state[12].step = 0;
+}
+
+// Media Play/Pause or Browser Home tap dance functions
+void on_dance_media_play(tap_dance_state_t *state, void *user_data) {
+    if (state->count == 3) {
+        tap_code16(KC_MEDIA_PLAY_PAUSE);
+        tap_code16(KC_MEDIA_PLAY_PAUSE);
+        tap_code16(KC_MEDIA_PLAY_PAUSE);
+    }
+    if (state->count > 3) {
+        tap_code16(KC_MEDIA_PLAY_PAUSE);
+    }
+}
+
+void dance_media_play_finished(tap_dance_state_t *state, void *user_data) {
+    tap_state[13].step = get_tap_dance_step(state);
+    switch (tap_state[13].step) {
+        case SINGLE_TAP: register_code16(KC_MEDIA_PLAY_PAUSE); break;
+        case DOUBLE_TAP: register_code16(KC_WWW_HOME); break;
+        case DOUBLE_SINGLE_TAP: tap_code16(KC_MEDIA_PLAY_PAUSE); register_code16(KC_MEDIA_PLAY_PAUSE);
+    }
+}
+
+void dance_media_play_reset(tap_dance_state_t *state, void *user_data) {
+    wait_ms(10);
+    switch (tap_state[13].step) {
+        case SINGLE_TAP: unregister_code16(KC_MEDIA_PLAY_PAUSE); break;
+        case DOUBLE_TAP: unregister_code16(KC_WWW_HOME); break;
+        case DOUBLE_SINGLE_TAP: unregister_code16(KC_MEDIA_PLAY_PAUSE); break;
+    }
+    tap_state[13].step = 0;
+}
+
+// Media Next or Browser Forward tap dance functions
+void on_dance_media_next(tap_dance_state_t *state, void *user_data) {
+    if (state->count == 3) {
+        tap_code16(KC_MEDIA_NEXT_TRACK);
+        tap_code16(KC_MEDIA_NEXT_TRACK);
+        tap_code16(KC_MEDIA_NEXT_TRACK);
+    }
+    if (state->count > 3) {
+        tap_code16(KC_MEDIA_NEXT_TRACK);
+    }
+}
+
+void dance_media_next_finished(tap_dance_state_t *state, void *user_data) {
+    tap_state[14].step = get_tap_dance_step(state);
+    switch (tap_state[14].step) {
+        case SINGLE_TAP: register_code16(KC_MEDIA_NEXT_TRACK); break;
+        case DOUBLE_TAP: register_code16(KC_WWW_FORWARD); break;
+        case DOUBLE_SINGLE_TAP: tap_code16(KC_MEDIA_NEXT_TRACK); register_code16(KC_MEDIA_NEXT_TRACK);
+    }
+}
+
+void dance_media_next_reset(tap_dance_state_t *state, void *user_data) {
+    wait_ms(10);
+    switch (tap_state[14].step) {
+        case SINGLE_TAP: unregister_code16(KC_MEDIA_NEXT_TRACK); break;
+        case DOUBLE_TAP: unregister_code16(KC_WWW_FORWARD); break;
+        case DOUBLE_SINGLE_TAP: unregister_code16(KC_MEDIA_NEXT_TRACK); break;
+    }
+    tap_state[14].step = 0;
+}
+
 tap_dance_action_t tap_dance_actions[] = {
     [TD_LSFT_CAPS] = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_CAPS),
     [TD_GRV_ESC]   = ACTION_TAP_DANCE_DOUBLE(KC_GRV, KC_ESC),
@@ -565,6 +661,9 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_ENT_BSLS]  = ACTION_TAP_DANCE_DOUBLE(KC_ENT, KC_BSLS),      // Enter tap, tap-hold for backslash
     [TD_BSLS_RSFT] = ACTION_TAP_DANCE_DOUBLE(KC_BSLS, KC_RSFT),     // Backslash tap, tap-hold for right shift
     [TD_LCTL_GAME] = ACTION_TAP_DANCE_DOUBLE(KC_LCTL, MO(_GAMING)),  // Left Control tap, tap-hold for GAMING layer
+    [TD_MEDIA_PREV] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_media_prev, dance_media_prev_finished, dance_media_prev_reset),  // Media Previous tap, double-tap for browser back
+    [TD_MEDIA_PLAY] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_media_play, dance_media_play_finished, dance_media_play_reset),  // Media Play/Pause tap, double-tap for browser home
+    [TD_MEDIA_NEXT] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_media_next, dance_media_next_finished, dance_media_next_reset),  // Media Next tap, double-tap for browser forward
     [TD_LCTL_BASE] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_lctl_base, dance_lctl_base_finished, dance_lctl_base_reset),  // LCTL tap, double-hold for BASE layer
 };
 
@@ -599,57 +698,57 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_NUMBERS] = LAYOUT(
     //┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐                                        ┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐
-       TD(TD_GRV_ESC),     KC_F10,         KC_F11,         KC_F12,         KC_PSCR,        KC_SCRL,                                                 KC_NUM,         KC_SLSH,        KC_ASTR,        KC_MINS,        KC_BSPC,        KC_BSPC,
+       TD(TD_GRV_ESC), KC_F10,         KC_F11,         KC_F12,         KC_PSCR,        KC_SCRL,                                                 KC_PAUSE,       KC_NUM,         KC_SLSH,        KC_ASTR,        KC_MINS,        KC_BSPC,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
-       KC_TAB,           KC_F7,          KC_F8,          KC_F9,          KC_INSERT,      KC_HOME,                                                 KC_PGUP,        KC_7,           KC_8,           TD(TD_9_MIN),   KC_PLUS,        KC_ENT,
+       KC_TRNS,        KC_F7,          KC_F8,          KC_F9,          KC_INSERT,      KC_HOME,                                                 KC_PGUP,        KC_7,           KC_8,           KC_9,           KC_PLUS,        KC_ENT,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
-       TD(TD_LSFT_CAPS), KC_F4,          KC_F5,          KC_F6,          KC_DELETE,      KC_END,                                                  KC_PGDN,        KC_4,           KC_5,           KC_6,           KC_COMM,        KC_ENT,
+       KC_TRNS,        KC_F4,          KC_F5,          KC_F6,          KC_DELETE,      KC_END,                                                  KC_PGDN,        KC_4,           KC_5,           KC_6,           KC_COMM,        KC_ENT,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┐        ┌───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
-       TD(TD_LCTL_BASE),  KC_F1,          KC_F2,          KC_F3,          KC_V,           KC_B,           KC_LBRC,                 KC_RBRC,        KC_N,           KC_M,           KC_COMM,        KC_DOT,         KC_SLSH,      TD(TD_RALT_ENT),
+      TD(TD_LCTL_BASE),KC_F1,          KC_F2,          KC_F3,          KC_V,           KC_B,           KC_LBRC,                 KC_RBRC,        KC_0,           KC_1,           KC_2,           KC_3,           KC_EQL,         KC_TRNS,
     //└───────────────┴───────────────┴───────────────┴───────────────┼───────────────┼───────────────┼───────────────┘        └───────────────┼───────────────┼───────────────┼───────────────┴───────────────┴───────────────┴───────────────┘
-                                                                         KC_LGUI,        KC_TRNS,        KC_TRNS,                 KC_SPC,         MO_SY,          KC_RCTL
+                                                                       KC_TRNS,        KC_TRNS,        KC_TRNS,                 KC_TRNS,        KC_0,           KC_DOT
     //                                                                └───────────────┴───────────────┴───────────────┘        └───────────────┴───────────────┴───────────────┘
     ),
 
     [_SYMBOLS] = LAYOUT(
     //┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐                                        ┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐
-       TD(TD_GRV_ESC),   TD(TD_1_FN),    TD(TD_2_NUM),    TD(TD_3_SYS),    TD(TD_4_GAME),    TD(TD_5_MACRO),                                             TD(TD_6_BS),  KC_7,           KC_8,           TD(TD_9_MIN),   TD(TD_0_EQ),      KC_BSPC,
+       TD(TD_GRV_ESC), TD(TD_1_FN),    TD(TD_2_NUM),   TD(TD_3_SYS),   TD(TD_4_GAME),  TD(TD_5_MACRO),                                          TD(TD_6_BS),    KC_7,           KC_8,           TD(TD_9_MIN),   TD(TD_0_EQ),    KC_BSPC,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
-       KC_TAB,           KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,                                                    KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           KC_BSLS,
+       KC_TAB,         KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,                                                    KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           KC_QUOT,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
-       TD(TD_LSFT_CAPS), KC_A,           KC_S,           KC_D,           KC_F,           KC_MY_COMPUTER,                                          KC_H,           KC_J,           KC_K,           KC_L,           KC_SCLN,        KC_ENT,
+      TD(TD_LSFT_CAPS),KC_A,           KC_S,           KC_D,           KC_F,           KC_G,                                                    KC_H,           KC_J,           KC_K,           KC_L,           KC_SCLN,        KC_ENT,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┐        ┌───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
-       TD(TD_LCTL_BASE),  KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,           KC_LBRC,                 KC_RBRC,        KC_N,           KC_M,           KC_COMM,        KC_DOT,         KC_SLSH,      TD(TD_QUOT_RSFT),
+      TD(TD_LCTL_BASE),KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,           KC_LBRC,                 KC_RBRC,        KC_N,           KC_M,           KC_COMM,        KC_DOT,         KC_SLSH,       TD(TD_BSLS_RSFT),
     //└───────────────┴───────────────┴───────────────┴───────────────┼───────────────┼───────────────┼───────────────┘        └───────────────┼───────────────┼───────────────┼───────────────┴───────────────┴───────────────┴───────────────┘
-                                                                         KC_AUDIO_VOL_DOWN,KC_AUDIO_MUTE,  KC_AUDIO_VOL_UP,                KC_SPC,         MO_SY,          KC_RCTL
+                                                                       KC_LGUI,        MO_FN,          KC_SPC,                  KC_SPC,         MO_NU,          KC_RCTL
     //                                                                └───────────────┴───────────────┴───────────────┘        └───────────────┴───────────────┴───────────────┘
     ),
 
     [_SYSTEM] = LAYOUT(
     //┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐                                        ┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐
-       KC_TRNS,          KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,                                                 KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,
+       KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,                                                 KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
-       KC_TRNS,          KC_TRNS,        KC_TRNS,        MS_UP,          KC_TRNS,        KC_TRNS,                                                 KC_TRNS,        MS_WHLU,        MS_WHLU,        MS_WHLD,        KC_TRNS,        KC_TRNS,
+       KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,                                                 KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
-       KC_TRNS,          KC_TRNS,        MS_LEFT,        MS_DOWN,        MS_RGHT,        KC_TRNS,                                                 KC_TRNS,        MS_WHLL,        MS_WHLD,        MS_WHLR,        KC_TRNS,        KC_TRNS,
+       KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_MY_COMPUTER, KC_TRNS,                                                 KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┐        ┌───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
-       KC_TRNS,          KC_TRNS,        MS_BTN1,        MS_BTN3,        MS_BTN2,        KC_TRNS,        KC_TRNS,                 KC_TRNS,        MS_BTN1,        MS_BTN3,        MS_BTN2,        KC_TRNS,        KC_TRNS,        KC_TRNS,
+      TD(TD_LCTL_BASE),KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,                 KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,
     //└───────────────┴───────────────┴───────────────┴───────────────┼───────────────┼───────────────┼───────────────┘        └───────────────┼───────────────┼───────────────┼───────────────┴───────────────┴───────────────┴───────────────┘
-                                                                         TO(_FUNCTION),          KC_TRNS,        KC_TRNS,                 KC_SPC,        TO(_GAMING),          KC_RCTL
+                                                                      KC_AUDIO_VOL_DOWN,KC_AUDIO_MUTE,  KC_AUDIO_VOL_UP,     TD(TD_MEDIA_PREV),TD(TD_MEDIA_PLAY),TD(TD_MEDIA_NEXT)
     //                                                                └───────────────┴───────────────┴───────────────┘        └───────────────┴───────────────┴───────────────┘
     ),
 
     [_GAMING] = LAYOUT(
     //┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐                                        ┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐
-       KC_ESC,           KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                                                    KC_6,           KC_7,           KC_8,           TD(TD_9_MIN),   TD(TD_0_EQ),      KC_BSPC,
+       KC_ESC,         KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                                                    KC_6,           KC_7,           KC_8,           TD(TD_9_MIN),   TD(TD_0_EQ),    KC_BSPC,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
-       KC_TAB,           KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,                                                    KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           TD(TD_ENT_BSLS),
+       KC_TAB,         KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,                                                    KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           TD(TD_ENT_BSLS),
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
-       KC_LSFT,          KC_A,           KC_S,           KC_D,           KC_F,           KC_G,                                                    KC_H,           KC_J,           KC_K,           KC_L,           KC_SCLN,        KC_QUOT,
+       KC_LSFT,        KC_A,           KC_S,           KC_D,           KC_F,           KC_G,                                                    KC_H,           KC_J,           KC_K,           KC_L,           KC_SCLN,        KC_QUOT,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┐        ┌───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
-       KC_LCTL,          KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,           KC_LBRC,                 KC_RBRC,        KC_N,           KC_M,           KC_COMM,        KC_DOT,         KC_SLSH,        KC_ENT,
+       KC_LCTL,        KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,           KC_LBRC,                 KC_RBRC,        KC_N,           KC_M,           KC_COMM,        KC_DOT,         KC_SLSH,        KC_ENT,
     //└───────────────┴───────────────┴───────────────┴───────────────┼───────────────┼───────────────┼───────────────┘        └───────────────┼───────────────┼───────────────┼───────────────┴───────────────┴───────────────┴───────────────┘
-                                                                         KC_LGUI,        KC_TRNS,        KC_TRNS,                 KC_SPC,         MO_SY,          KC_RCTL
+                                                                       KC_LGUI,       TD(TD_LCTL_BASE),KC_SPC,                  KC_SPC,         MO_NU,          KC_RCTL
     //                                                                └───────────────┴───────────────┴───────────────┘        └───────────────┴───────────────┴───────────────┘
     ),
 
@@ -661,9 +760,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
        _______,          _______,        _______,        _______,        _______,        _______,                                                 _______,        JIGGLER,        _______,        _______,        _______,        _______,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┐        ┌───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
-       _______,          _______,        _______,        _______,        _______,        _______,        _______,                 _______,        _______,        _______,        _______,        _______,        _______,        _______,
+      TD(TD_LCTL_BASE),  _______,        _______,        _______,        _______,        _______,        _______,                 _______,        _______,        _______,        _______,        _______,        _______,        _______,
     //└───────────────┴───────────────┴───────────────┴───────────────┼───────────────┼───────────────┼───────────────┘        └───────────────┼───────────────┼───────────────┼───────────────┴───────────────┴───────────────┴───────────────┘
-                                                                         _______,        KC_TRNS,        KC_TRNS,                 KC_SPC,         MO_SY,          KC_RCTL
+                                                                       KC_LGUI,        MO_FN,          KC_SPC,                  KC_SPC,         MO_NU,          KC_RCTL
     //                                                                └───────────────┴───────────────┴───────────────┘        └───────────────┴───────────────┴───────────────┘
     )
 };

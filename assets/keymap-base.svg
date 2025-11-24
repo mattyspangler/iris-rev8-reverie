@@ -305,9 +305,7 @@ rect.combo {
 </g>
 <g transform="translate(725, 94)" class="key keypos-23">
 <rect rx="6" ry="6" x="-23" y="-23" width="46" height="46" class="key"/>
-<text x="0" y="0" class="key tap">
-<tspan x="0" dy="-1.2em">TD(TD</tspan><tspan x="0" dy="1.2em">ENT</tspan><tspan x="0" dy="1.2em">BSLS)</tspan>
-</text>
+<text x="0" y="0" class="key tap">&#x27;</text>
 </g>
 <g transform="translate(25, 144)" class="key keypos-24">
 <rect rx="6" ry="6" x="-23" y="-23" width="46" height="46" class="key"/>
@@ -357,12 +355,12 @@ rect.combo {
 </g>
 <g transform="translate(725, 144)" class="key keypos-35">
 <rect rx="6" ry="6" x="-23" y="-23" width="46" height="46" class="key"/>
-<text x="0" y="0" class="key tap">&#x27;</text>
+<text x="0" y="0" class="key tap">ENT</text>
 </g>
 <g transform="translate(25, 194)" class="key keypos-36">
 <rect rx="6" ry="6" x="-23" y="-23" width="46" height="46" class="key"/>
 <text x="0" y="0" class="key tap">
-<tspan x="0" dy="-1.2em">TD(TD</tspan><tspan x="0" dy="1.2em">LCTL</tspan><tspan x="0" dy="1.2em">BASE)</tspan>
+<tspan x="0" dy="-1.2em">TD(TD</tspan><tspan x="0" dy="1.2em">LCTL</tspan><tspan x="0" dy="1.2em">GAME)</tspan>
 </text>
 </g>
 <g transform="translate(75, 194)" class="key keypos-37">
@@ -416,7 +414,7 @@ rect.combo {
 <g transform="translate(725, 194)" class="key keypos-49">
 <rect rx="6" ry="6" x="-23" y="-23" width="46" height="46" class="key"/>
 <text x="0" y="0" class="key tap">
-<tspan x="0" dy="-1.2em">TD(TD</tspan><tspan x="0" dy="1.2em">RALT</tspan><tspan x="0" dy="1.2em">ENT)</tspan>
+<tspan x="0" dy="-1.2em">TD(TD</tspan><tspan x="0" dy="1.2em">BSLS</tspan><tspan x="0" dy="1.2em">RSFT)</tspan>
 </text>
 </g>
 <g transform="translate(200, 238)" class="key keypos-50">
@@ -440,7 +438,7 @@ rect.combo {
 <g transform="translate(500, 244)" class="key keypos-54">
 <rect rx="6" ry="6" x="-23" y="-23" width="46" height="46" class="key"/>
 <text x="0" y="0" class="key tap">
-<tspan x="0" dy="-1.2em">MO(</tspan><tspan x="0" dy="1.2em">SYMBOLS</tspan><tspan x="0" dy="1.2em">)</tspan>
+<tspan x="0" dy="-1.2em">MO(</tspan><tspan x="0" dy="1.2em">NUMBERS</tspan><tspan x="0" dy="1.2em">)</tspan>
 </text>
 </g>
 <g transform="translate(550, 238)" class="key keypos-55">
