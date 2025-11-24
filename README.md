@@ -16,73 +16,27 @@ My Keebio Iris Rev 8 custom keymap called "Reverie" -- a productivity-focused la
 
 ![Complete Keymap](assets/keymap.png "Complete Reverie Keymap")
 
-### QWERTY (Layer 0) - Purple
+## Tap Dance Keys
 
-**Base typing layer with advanced tap dance functionality:**
-
-#### Tap Dance Functions
-- **`~` (grave)**: Single tap for `~`, double tap for `Esc`
-- **`1`**: Single tap for `1`, double-tap and hold for FUNCTION layer
-- **`2`**: Single tap for `2`, double-tap and hold for NUMBERS layer  
-- **`3`**: Single tap for `3`, double-tap and hold for SYSTEM layer
-- **`4`**: Single tap for `4`, double-tap and hold for GAMING layer
-- **`5`**: Single tap for `5`, double-tap and hold for MACRO layer
-- **`6`**: Single tap for `6`, double-tap and hold for BASE layer
-- **`9`**: Single tap for `9`, double-tap and hold for minus (-)
-- **`0`**: Single tap for `0`, double-tap and hold for equals (=)
-- **`Enter`**: Single tap for Enter, double-tap and hold for backslash (\)
-- **`Backslash`**: Single tap for backslash (\), double-tap and hold for right shift
-- **`Left Shift`**: Single tap for shift, double tap for `Caps Lock`
-- **`Left Ctrl`**: Single tap for ctrl, double-tap and hold for BASE layer
-- **Media keys**: Double-tap for browser navigation (back/home/forward)
-
-### NUMBERS (Layer 1) - Green
-
-**Numpad and F-key layout:**
-
-- **Top row**: F10-F12, Print Screen, Scroll Lock
-- **Right side**: Full numpad layout with mathematical operators (+, -, *, /)
-- **Navigation**: Page Up/Down, Home, End, Insert, Delete
-- **Function keys**: F1-F9 in left side cluster
-
-### SYMBOLS (Layer 2) - Red
-
-**Symbols and navigation:**
-
-- **Right side**: Symbol characters and brackets
-- **Navigation**: Arrow keys (up, down, left, right)
-- **Media controls**: Volume down, mute, volume up in thumb cluster
-
-
-### SYSTEM (Layer 3) - Yellow
-
-**System administration and media:**
-
-- **Mouse controls**: Precise mouse movement and scrolling
-- **My Computer**: Quick access to file explorer
-- **Media controls**: Previous track, play/pause, next track
-- **Audio controls**: Volume down, mute, volume up
-- **Browser navigation**: Media keys double-tap for browser back/home/forward
-
-### GAMING (Layer 4) - Blue
-
-**Dedicated gaming layout:**
-
-- **Clean WASD**: Standard FPS gaming controls
-- **Number row**: Standard 1-0 number keys
-- **Punctuation**: Standard punctuation layout
-- **Minimal interference**: No complex modifiers during gaming
-
-### MACRO (Layer 5) - Pink
-
-**Macros, RGB, and music:**
-
-- **Dynamic Macros**: Record/play macros 1 and 2
-- **Music Controls**: Music on/off, next track, toggle
-- **RGB Controls**: Brightness up/down, toggle, mode forward
-- **Auto Shift**: AS_TOGG for automatic capitalization
-- **Layer Navigation**: Quick return to BASE and GAMING layers
-- **Macro Keys**: `T` for TURBO toggle, `J` for JIGGLER toggle
+| Key | Variable | Behavior |
+|-----|----------|----------|
+| `~`/`Esc` | `TD(TD_GRV_ESC)` | Single tap: `~`, Double tap: `Esc` |
+| `1` | `TD(TD_1_FN)` | Single tap: `1`, Double-hold: Switch to FUNCTION layer |
+| `2` | `TD(TD_2_NUM)` | Single tap: `2`, Double-hold: Switch to NUMBERS layer |
+| `3` | `TD(TD_3_SYS)` | Single tap: `3`, Double-hold: Switch to SYSTEM layer |
+| `4` | `TD(TD_4_GAME)` | Single tap: `4`, Double-hold: Switch to GAMING layer |
+| `5` | `TD(TD_5_MACRO)` | Single tap: `5`, Double-hold: Switch to MACRO layer |
+| `6` | `TD(TD_6_BS)` | Single tap: `6`, Tap-hold: Switch to BASE layer |
+| `9` | `TD(TD_9_MIN)` | Single tap: `9`, Tap-hold: `-` |
+| `0` | `TD(TD_0_EQ)` | Single tap: `0`, Tap-hold: `=` |
+| `Enter` | `TD(TD_ENT_BSLS)` | Single tap: `Enter`, Tap-hold: `\` |
+| `\` | `TD(TD_BSLS_RSFT)` | Single tap: `\`, Tap-hold: `Right Shift` |
+| `Left Shift` | `TD(TD_LSFT_CAPS)` | Single tap: `Left Shift`, Double tap: `Caps Lock` |
+| `Left Ctrl` (Gaming layer) | `TD(TD_LCTL_GAME)` | Single tap: `Left Ctrl`, Double-hold: Switch to GAMING layer |
+| `Left Ctrl` (Function layer) | `TD(TD_LCTL_BASE)` | Single tap: `Left Ctrl`, Double-hold: Switch to BASE layer |
+| `Media Previous` | `TD(TD_MEDIA_PREV)` | Single tap: `Media Previous`, Double tap: `Browser Back` |
+| `Media Play/Pause` | `TD(TD_MEDIA_PLAY)` | Single tap: `Media Play/Pause`, Double tap: `Browser Home` |
+| `Media Next` | `TD(TD_MEDIA_NEXT)` | Single tap: `Media Next`, Double tap: `Browser Forward` |
 
 ## Build Instructions
 
