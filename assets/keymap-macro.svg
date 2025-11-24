@@ -401,30 +401,28 @@ rect.combo {
 <rect rx="6" ry="6" x="-23" y="-23" width="46" height="46" class="key trans"/>
 <text x="0" y="0" class="key trans tap">▽</text>
 </g>
-<g transform="translate(250, 244)" class="key keypos-51">
-<rect rx="6" ry="6" x="-23" y="-23" width="46" height="46" class="key"/>
-<text x="0" y="0" class="key tap">
-<tspan x="0" dy="-0.6em">TO(</tspan><tspan x="0" dy="1.2em">GAMING)</tspan>
-</text>
+<g transform="translate(250, 244)" class="key trans keypos-51">
+<rect rx="6" ry="6" x="-23" y="-23" width="46" height="46" class="key trans"/>
+<text x="0" y="0" class="key trans tap">▽</text>
 </g>
 <g transform="translate(305, 262)" class="key trans keypos-52">
 <rect rx="6" ry="6" x="-23" y="-23" width="46" height="46" class="key trans"/>
 <text x="0" y="0" class="key trans tap">▽</text>
 </g>
-<g transform="translate(445, 262)" class="key trans keypos-53">
-<rect rx="6" ry="6" x="-23" y="-23" width="46" height="46" class="key trans"/>
-<text x="0" y="0" class="key trans tap">▽</text>
+<g transform="translate(445, 262)" class="key keypos-53">
+<rect rx="6" ry="6" x="-23" y="-23" width="46" height="46" class="key"/>
+<text x="0" y="0" class="key tap">SPC</text>
 </g>
 <g transform="translate(500, 244)" class="key keypos-54">
 <rect rx="6" ry="6" x="-23" y="-23" width="46" height="46" class="key"/>
 <text x="0" y="0" class="key tap">
-<tspan x="0" dy="-0.6em">TO(</tspan><tspan x="0" dy="1.2em">BASE)</tspan>
+<tspan x="0" dy="-1.2em">MO(</tspan><tspan x="0" dy="1.2em">SYMBOLS</tspan><tspan x="0" dy="1.2em">)</tspan>
 </text>
 </g>
-<g transform="translate(550, 238)" class="key trans keypos-55">
-<rect rx="6" ry="6" x="-23" y="-23" width="46" height="46" class="key trans"/>
-<text x="0" y="0" class="key trans tap">▽</text>
+<g transform="translate(550, 238)" class="key keypos-55">
+<rect rx="6" ry="6" x="-23" y="-23" width="46" height="46" class="key"/>
+<text x="0" y="0" class="key tap">RCTL</text>
 </g>
 </g>
 </g>
-<text x="1590.0" y="372.0" class="footer">Iris Rev 8 - reverie</text></svg>
+<text x="1590.0" y="372.0" class="footer">Iris Rev 8 - Reverie</text></svg>
