@@ -50,7 +50,7 @@ enum iris_layers {
 #define HSV_SYMBOLS_RED 0, 255, 255        // #ff0000 - Red
 #define HSV_SYSTEM_YELLOW 61, 255, 255   // #f6ff00 - Busy Bee
 #define HSV_GAMING_TURQUOISE 178, 255, 255 // #00fff4 - Turquoise Blue
-#define HSV_MACRO_PINK 335, 255, 255     // #ff008e - Pink Panther
+#define HSV_MACRO_PINK 79, 255, 255     // #ff008e - Pink Panther (wrapped to 0-255 range)
 
 // Layer toggling and momentary keys
 #define TO_QW TO(QWERTY_LAYER)
@@ -113,7 +113,11 @@ enum {
     MORE_TAPS
 };
 
-static tap_state_t tap_state[sizeof(tap_dance_actions) / sizeof(tap_dance_action_t)];
+// Forward declaration
+tap_dance_action_t tap_dance_actions[];
+
+#define TD_COUNT 15
+static tap_state_t tap_state[TD_COUNT];
 
 uint8_t get_tap_dance_step(tap_dance_state_t *state);
 
@@ -759,7 +763,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
        AS_TOGG,          _______,        _______,        _______,        _______,        TURBO,                                                    _______,        JIGGLER,        _______,        _______,        _______,        _______,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┐        ┌───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
-      TD(TD_LCTL_BASE),  MU_NEXT,        MU_TOGG,        QK_MUSIC_OFF,   QK_MUSIC_ON,    TO(_GAMING),  _______,                 _______,         TO(_BASE),     RGB_VAI,        RGB_VAD,        RGB_TOG,        RGB_MODE_FORWARD,_______,
+      TD(TD_LCTL_BASE),  MU_NEXT,        MU_TOGG,        QK_MUSIC_OFF,   QK_MUSIC_ON,    TO(_GAMING),  _______,                 _______,         _______,       _______,       _______,       _______,       _______,       _______,
     //└───────────────┴───────────────┴───────────────┴───────────────┼───────────────┼───────────────┼───────────────┘        └───────────────┼───────────────┼───────────────┼───────────────┴───────────────┴───────────────┴───────────────┘
                                                                        DM_REC2,        DM_RSTP,        DM_PLY2,                 DM_REC1,        DM_RSTP,        DM_PLY1
     //                                                                └───────────────┴───────────────┴───────────────┘        └───────────────┴───────────────┴───────────────┘
