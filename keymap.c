@@ -48,9 +48,9 @@ enum iris_layers {
 #define HSV_FUNCTION_GREEN 83, 255, 238   // #0fee00 - Squeeze Toy Alien  
 #define HSV_NUMBERS_BLUE 240, 255, 255     // #2000ff - Blue Pencil
 #define HSV_SYMBOLS_RED 0, 255, 255        // #ff0000 - Red
-#define HSV_SYSTEM_YELLOW 44, 255, 255   // #f6ff00 - Busy Bee
+#define HSV_SYSTEM_YELLOW 61, 255, 255   // #f6ff00 - Busy Bee
 #define HSV_GAMING_TURQUOISE 178, 255, 255 // #00fff4 - Turquoise Blue
-#define HSV_MACRO_PINK 79, 255, 255      // #ff008e - Pink Panther
+#define HSV_MACRO_PINK 335, 255, 255     // #ff008e - Pink Panther
 
 // Layer toggling and momentary keys
 #define TO_QW TO(QWERTY_LAYER)
@@ -115,7 +115,7 @@ enum {
     MORE_TAPS
 };
 
-static tap_state_t tap_state[15]; // Array for 15 tap dances
+static tap_state_t tap_state[sizeof(tap_dance_actions) / sizeof(tap_dance_action_t)];
 
 uint8_t get_tap_dance_step(tap_dance_state_t *state);
 
@@ -350,8 +350,8 @@ void dance_6_bsp_reset(tap_dance_state_t *state, void *user_data) {
 
 // Tap dance for 9/Minus - tap for 9, double-tap and hold for minus
 void on_dance_9(tap_dance_state_t *state, void *user_data);
-void dance_9_ent_finished(tap_dance_state_t *state, void *user_data);
-void dance_9_ent_reset(tap_dance_state_t *state, void *user_data);
+void dance_9_min_finished(tap_dance_state_t *state, void *user_data);
+void dance_9_min_reset(tap_dance_state_t *state, void *user_data);
 
 void on_dance_9(tap_dance_state_t *state, void *user_data) {
     if(state->count == 3) {
@@ -704,7 +704,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
        KC_TRNS,        KC_F4,          KC_F5,          KC_F6,          KC_DELETE,      KC_END,                                                  KC_PGDN,        KC_4,           KC_5,           KC_6,           KC_COMM,        KC_ENT,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┐        ┌───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
-      TD(TD_LCTL_BASE),KC_F1,          KC_F2,          KC_F3,          KC_V,           KC_B,           KC_LBRC,                 KC_RBRC,        KC_0,           KC_1,           KC_2,           KC_3,           KC_EQL,         KC_TRNS,
+      TD(TD_LCTL_BASE),KC_F1,          KC_F2,          KC_F3,          KC_TRNS,        KC_TRNS,        KC_LBRC,                 KC_RBRC,        KC_0,           KC_1,           KC_2,           KC_3,           KC_EQL,         KC_TRNS,
     //└───────────────┴───────────────┴───────────────┴───────────────┼───────────────┼───────────────┼───────────────┘        └───────────────┼───────────────┼───────────────┼───────────────┴───────────────┴───────────────┴───────────────┘
                                                                        KC_TRNS,        KC_TRNS,        KC_TRNS,                 KC_TRNS,        KC_0,           KC_DOT
     //                                                                └───────────────┴───────────────┴───────────────┘        └───────────────┴───────────────┴───────────────┘
@@ -754,7 +754,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_MACRO] = LAYOUT(
     //┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐                                        ┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐
-       _______,          _______,        _______,        _______,        _______,        _______,                                                 _______,        _______,        _______,        _______,        _______,        _______,
+       TURBO,           JIGGLER,       _______,        _______,        _______,        _______,                                                 _______,        _______,        _______,        _______,        _______,        _______,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
        _______,          _______,        _______,        _______,        _______,        _______,                                                 _______,        _______,        _______,        _______,        _______,        _______,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
@@ -965,13 +965,13 @@ layer_state_t default_layer_state_set_user(layer_state_t state) {
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-    rgblight_set_layer_state(0, layer_state_cmp(state, _BASE));
-    rgblight_set_layer_state(1, layer_state_cmp(state, _FUNCTION));
-    rgblight_set_layer_state(2, layer_state_cmp(state, _NUMBERS));
-    rgblight_set_layer_state(3, layer_state_cmp(state, _SYMBOLS));
-    rgblight_set_layer_state(4, layer_state_cmp(state, _SYSTEM));
-    rgblight_set_layer_state(5, layer_state_cmp(state, _GAMING));
-    rgblight_set_layer_state(6, layer_state_cmp(state, _MACRO));
+    rgblight_set_layer_state(_BASE, layer_state_cmp(state, _BASE));
+    rgblight_set_layer_state(_FUNCTION, layer_state_cmp(state, _FUNCTION));
+    rgblight_set_layer_state(_NUMBERS, layer_state_cmp(state, _NUMBERS));
+    rgblight_set_layer_state(_SYMBOLS, layer_state_cmp(state, _SYMBOLS));
+    rgblight_set_layer_state(_SYSTEM, layer_state_cmp(state, _SYSTEM));
+    rgblight_set_layer_state(_GAMING, layer_state_cmp(state, _GAMING));
+    rgblight_set_layer_state(_MACRO, layer_state_cmp(state, _MACRO));
     return state;
 }
 
