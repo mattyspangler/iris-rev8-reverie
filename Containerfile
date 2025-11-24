@@ -18,32 +18,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libhidapi-hidraw0 \
     libusb-dev \
     ca-certificates \
-    gcc unzip \
-    wget \
-    zip \
     gcc-avr \
     binutils-avr \
-    avr-libc \
     dfu-programmer \
     dfu-util \
-    gcc-arm-none-eabi \
-    binutils-arm-none-eabi \
-    libnewlib-arm-none-eabi \
     make \
     python3 \
     python3-pip \
     python3-venv \
-    git-core && \
+    git-core \
+    librsvg2-bin \
+    imagemagick && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-ADD ./build-volume /build-volume
-VOLUME ./build-volume
-#WORKDIR /build-volume
-
 COPY entry.sh .
-
 RUN python3 -m venv /opt/venv
-RUN . /opt/venv/bin/activate && \
-    pip install qmk
+RUN . /opt/venv/bin/activate && pip install qmk
 
 CMD /entry.sh
