@@ -36,10 +36,6 @@ My Keebio Iris Rev 8 custom keymap called "Reverie" -- a productivity-focused la
 - **`Left Ctrl`**: Single tap for ctrl, double-tap and hold for BASE layer
 - **Media keys**: Double-tap for browser navigation (back/home/forward)
 
-#### Momentary Layers
-- **`[` (left bracket)**: Hold for temporary NUM layer access
-- **`]` (right bracket)**: Hold for temporary NUM layer access
-
 ### NUMBERS (Layer 1) - Green
 
 **Numpad and F-key layout:**

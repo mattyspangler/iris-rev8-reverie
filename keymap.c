@@ -477,6 +477,7 @@ void dance_ent_bsls_reset(tap_dance_state_t *state, void *user_data) {
     wait_ms(10);
     switch (tap_state[9].step) {
         case SINGLE_TAP: unregister_code16(KC_ENT); break;
+        case SINGLE_HOLD: unregister_code16(KC_ENT); break;
         case DOUBLE_TAP: unregister_code16(KC_ENT); break;
         case DOUBLE_HOLD: unregister_code16(KC_BSLS); break;
         case DOUBLE_SINGLE_TAP: unregister_code16(KC_ENT); break;
@@ -510,6 +511,7 @@ void dance_bsls_rsft_reset(tap_dance_state_t *state, void *user_data) {
     wait_ms(10);
     switch (tap_state[10].step) {
         case SINGLE_TAP: unregister_code16(KC_BSLS); break;
+        case SINGLE_HOLD: unregister_code16(KC_BSLS); break;
         case DOUBLE_TAP: unregister_code16(KC_BSLS); break;
         case DOUBLE_HOLD: unregister_code16(KC_RSFT); break;
         case DOUBLE_SINGLE_TAP: unregister_code16(KC_BSLS); break;
@@ -647,11 +649,11 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_LSFT_CAPS] = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_CAPS),
     [TD_GRV_ESC]   = ACTION_TAP_DANCE_DOUBLE(KC_GRV, KC_ESC),
 
-    [TD_1_FN]      = ACTION_TAP_DANCE_DOUBLE(KC_1, MO(_FUNCTION)),  // 1 tap, tap-hold for FUNCTION layer
-    [TD_2_NUM]     = ACTION_TAP_DANCE_DOUBLE(KC_2, MO(_NUMBERS)),   // 2 tap, tap-hold for NUMBERS layer
-    [TD_3_SYS]     = ACTION_TAP_DANCE_DOUBLE(KC_3, MO(_SYSTEM)),    // 3 tap, tap-hold for SYSTEM layer
-    [TD_4_GAME]    = ACTION_TAP_DANCE_DOUBLE(KC_4, MO(_GAMING)),    // 4 tap, tap-hold for GAMING layer
-    [TD_5_MACRO]   = ACTION_TAP_DANCE_DOUBLE(KC_5, MO(_MACRO)),     // 5 tap, tap-hold for MACRO layer
+    [TD_1_FN]      = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_1, dance_1_fn_finished, dance_1_fn_reset),  // 1 tap, double-hold for FUNCTION layer
+    [TD_2_NUM]     = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_2, dance_2_num_finished, dance_2_num_reset),   // 2 tap, double-hold for NUMBERS layer
+    [TD_3_SYS]     = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_3, dance_3_sys_finished, dance_3_sys_reset),    // 3 tap, double-hold for SYSTEM layer
+    [TD_4_GAME]    = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_4, dance_4_game_finished, dance_4_game_reset),    // 4 tap, double-hold for GAMING layer
+    [TD_5_MACRO]   = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_5, dance_5_macro_finished, dance_5_macro_reset),     // 5 tap, double-hold for MACRO layer
     [TD_6_BS]      = ACTION_TAP_DANCE_DOUBLE(KC_6, MO(_BASE)),       // 6 tap, tap-hold for BASE layer
     [TD_9_MIN]     = ACTION_TAP_DANCE_DOUBLE(KC_9, KC_MINS),        // 9 tap, tap-hold for minus
     [TD_0_EQ]      = ACTION_TAP_DANCE_DOUBLE(KC_0, KC_EQL),         // 0 tap, tap-hold for equals
