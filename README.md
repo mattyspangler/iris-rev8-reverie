@@ -26,7 +26,7 @@ My Keebio Iris Rev 8 custom keymap called "Reverie" -- a productivity-focused la
 | `3` | `TD(TD_3_SYS)` | Single tap: `3`, Double-hold: Switch to SYSTEM layer |
 | `4` | `TD(TD_4_GAME)` | Single tap: `4`, Double-hold: Switch to GAMING layer |
 | `5` | `TD(TD_5_MACRO)` | Single tap: `5`, Double-hold: Switch to MACRO layer |
-| `6` | `TD(TD_6_BS)` | Single tap: `6`, Tap-hold: Switch to BASE layer |
+| `6` | `TD(TD_6_BS)` | Single tap: `6`, Double-hold: Switch to BASE layer |
 | `9` | `TD(TD_9_MIN)` | Single tap: `9`, Tap-hold: `-` |
 | `0` | `TD(TD_0_EQ)` | Single tap: `0`, Tap-hold: `=` |
 | `Enter` | `TD(TD_ENT_BSLS)` | Single tap: `Enter`, Tap-hold: `\` |
@@ -40,9 +40,7 @@ My Keebio Iris Rev 8 custom keymap called "Reverie" -- a productivity-focused la
 
 ## Build Instructions
 
-### Prerequisites
-- Podman (or Docker) for containerized builds
-- Git for cloning repositories
+Podman is required by build.sh.
 
 ### Building Firmware
 
