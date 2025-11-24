@@ -78,9 +78,7 @@ enum iris_layers {
 enum tap_dance_codes {
     TD_LSFT_CAPS, // Left Shift or Caps Lock
     TD_GRV_ESC,   // Grave or Escape
-    TD_RALT_ENT,  // Right Alt or Enter
-    TD_LCTL_ESC,  // Left Control or Escape - DEPRECATED
-    TD_LSPC,      // Left GUI or Space
+
     // Number tap dances with layer switching
     TD_1_FN,      // 1 tap, double-hold to switch to FUNCTION layer
     TD_2_NUM,     // 2 tap, double-hold to switch to NUMBERS layer
@@ -648,8 +646,7 @@ void dance_media_next_reset(tap_dance_state_t *state, void *user_data) {
 tap_dance_action_t tap_dance_actions[] = {
     [TD_LSFT_CAPS] = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_CAPS),
     [TD_GRV_ESC]   = ACTION_TAP_DANCE_DOUBLE(KC_GRV, KC_ESC),
-    [TD_RALT_ENT]  = ACTION_TAP_DANCE_DOUBLE(KC_RALT, KC_ENT),
-    [TD_LSPC]      = ACTION_TAP_DANCE_DOUBLE(KC_LGUI, KC_SPC),
+
     [TD_1_FN]      = ACTION_TAP_DANCE_DOUBLE(KC_1, MO(_FUNCTION)),  // 1 tap, tap-hold for FUNCTION layer
     [TD_2_NUM]     = ACTION_TAP_DANCE_DOUBLE(KC_2, MO(_NUMBERS)),   // 2 tap, tap-hold for NUMBERS layer
     [TD_3_SYS]     = ACTION_TAP_DANCE_DOUBLE(KC_3, MO(_SYSTEM)),    // 3 tap, tap-hold for SYSTEM layer
@@ -754,11 +751,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_MACRO] = LAYOUT(
     //┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐                                        ┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐
-       TURBO,           JIGGLER,       _______,        _______,        _______,        _______,                                                 _______,        _______,        _______,        _______,        _______,        _______,
+       _______,          _______,        _______,        _______,        _______,        _______,                                                 _______,        _______,        _______,        _______,        _______,        _______,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
        _______,          _______,        _______,        _______,        _______,        _______,                                                 _______,        _______,        _______,        _______,        _______,        _______,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤                                        ├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
-       AS_TOGG,          _______,        _______,        _______,        _______,        _______,                                                 _______,        _______,        _______,        _______,        _______,        _______,
+       AS_TOGG,          _______,        _______,        _______,        _______,        TURBO,                                                    _______,        JIGGLER,        _______,        _______,        _______,        _______,
     //├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┐        ┌───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
       TD(TD_LCTL_BASE),  MU_NEXT,        MU_TOGG,        QK_MUSIC_OFF,   QK_MUSIC_ON,    TO(_GAMING),  _______,                 _______,         TO(_BASE),     RGB_VAI,        RGB_VAD,        RGB_TOG,        RGB_MODE_FORWARD,_______,
     //└───────────────┴───────────────┴───────────────┴───────────────┼───────────────┼───────────────┼───────────────┘        └───────────────┼───────────────┼───────────────┼───────────────┴───────────────┴───────────────┴───────────────┘

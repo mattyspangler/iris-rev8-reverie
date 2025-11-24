@@ -33,9 +33,8 @@ My Keebio Iris Rev 8 custom keymap called "Reverie" -- a productivity-focused la
 - **`Enter`**: Single tap for Enter, double-tap and hold for backslash (\)
 - **`Backslash`**: Single tap for backslash (\), double-tap and hold for right shift
 - **`Left Shift`**: Single tap for shift, double tap for `Caps Lock`
-- **`Left Ctrl`**: Single tap for ctrl, double-tap and hold for GAMING layer
-- **`Left GUI`**: Single tap for GUI, double tap for `Space`
-- **`Right Alt`**: Single tap for Alt, double tap for `Enter`
+- **`Left Ctrl`**: Single tap for ctrl, double-tap and hold for BASE layer
+- **Media keys**: Double-tap for browser navigation (back/home/forward)
 
 #### Momentary Layers
 - **`[` (left bracket)**: Hold for temporary NUM layer access
@@ -87,6 +86,7 @@ My Keebio Iris Rev 8 custom keymap called "Reverie" -- a productivity-focused la
 - **RGB Controls**: Brightness up/down, toggle, mode forward
 - **Auto Shift**: AS_TOGG for automatic capitalization
 - **Layer Navigation**: Quick return to BASE and GAMING layers
+- **Macro Keys**: `T` for TURBO toggle, `J` for JIGGLER toggle
 
 ## Build Instructions
 

@@ -1,196 +1,159 @@
-# AGENTS.md
+# AGENTS.md - Iris Rev 8 Reverie Keymap Repository
 
-This document provides essential information for AI agents working with the Iris Rev 8 QMK keymap repository.
+This document provides essential information for agents working with this QMK firmware repository for the Keebio Iris Rev 8 keyboard running the "Reverie" custom keymap.
 
 ## Project Overview
 
-This is "Reverie" - a sophisticated custom QMK firmware keymap for the Keebio Iris Rev 8 split ergonomic keyboard, created by Matthew Spangler. It features a 6-layer productivity-focused layout with advanced RGB lighting, tap dance functionality, custom macros, and automatic keymap visualization generation.
+This is a QMK firmware repository for the Keebio Iris Rev 8 split ortholinear keyboard with a custom productivity-focused keymap called "Reverie". The project features:
 
-## Build System & Architecture
+- Containerized builds using Podman/Docker for reproducible compilation
+- Per-layer RGB lighting with distinct colors
+- Advanced tap dance functionality
+- Automated keymap visualization generation
+- Custom macros including TURBO and JIGGLER functionality
 
-### Containerized Build Process
-This project uses a reproducible containerized build system:
-1. **Primary build**: `./build.sh` - Complete automated build using Podman
-2. **Container**: `Containerfile` - Debian-based with QMK toolchain, keymap-drawer, ImageMagick
-3. **Entry script**: `entry.sh` - Handles QMK setup, compilation, and visualization
-4. **Outputs**: 
-   - UF2 firmware in `./build-volume/build-output/`
-   - Keymap visualizations in `./assets/` (PNG/SVG)
+## Essential Commands
 
-### Build Workflow
+### Build Firmware
 ```bash
-./build.sh  # Complete build with firmware + visualizations
+./build.sh
+```
+This command:
+- Downloads/updates QMK firmware
+- Builds container environment 
+- Compiles firmware UF2 file and keymap visualizations
+- Outputs files to `./build-volume/build-output/`
+- Copies new keymap images to `./assets/` folder
+
+### Clean Build Artifacts
+```bash
+rm -rf build-volume/qmk_firmware/.build
 ```
 
-The build process:
-1. Clones/updates QMK firmware repository
-2. Builds reproducible container environment
-3. Compiles firmware for keebio/iris/rev8 with "reverie" keymap
-4. Generates keymap visualizations using keymap-drawer
-5. Copies assets to repo root for README display
+### Check Container Runtime
+```bash
+podman info
+```
 
-## Key Components
+## Core Files and Structure
 
-### Core Files
-- **keymap.c** (608 lines) - Complete keymap with layers, tap dances, RGB
-- **config.h** - Hardware configuration (68 LEDs, split settings)
-- **rules.mk** - Feature flags (RGBLIGHT_ENABLE=yes, TAP_DANCE_ENABLE=yes)
-- **build.sh** - Build orchestrator with asset copying
-- **Containerfile** - Reproducible build environment
-- **entry.sh** - Container script with QMK compilation + visualization
-- **keymap-drawer-config.yaml** - Visualization configuration
-- **TODO.md** - Development status and troubleshooting log
+### Keymap Files
+- `keymap.c` - Main keymap definition with layer layouts, tap dances, and custom keycodes
+- `config.h` - Hardware configuration and feature flags
+- `rules.mk` - QMK build configuration and feature enables
+- `keymap-drawer-config.yaml` - Visualization styling configuration
 
-### Tooling
-- **QuantumDuck/** - Ducky Script to QMK converter tool
-- **assets/** - Auto-generated keymap visualizations (12 files: 6 SVG + 6 PNG)
-- **build-volume/** - Container build artifacts
-- **TODO.md** - Active development log with current issues and solutions
+### Build System
+- `build.sh` - Main build script that orchestrates the entire build process
+- `Containerfile` - Container definition with QMK dependencies
+- `entry.sh` - Container entry point script that handles QMK setup and compilation
+- `.gitignore` - Excludes `build-volume/`, `.env`, and `TODO.md`
+
+### Generated Content
+- `./build-volume/build-output/` - Compiled UF2 firmware and generated assets
+- `./assets/` - Keymap visualization images (PNG/SVG) used in README.md
 
 ## Keymap Architecture
 
-### Layer System (6 layers)
-1. **BASE (Layer 0)** - Purple RGB - Base typing with advanced tap dances
-2. **FUNCTION (Layer 1)** - Green RGB - F-keys, numpad, basic mouse controls
-3. **NUMBERS (Layer 2)** - Blue RGB - Symbols and navigation combined
-4. **SYMBOLS (Layer 3)** - Red RGB - Media controls and advanced mouse
-5. **SYSTEM (Layer 4)** - Yellow RGB - System utilities and admin
-6. **GAMING (Layer 5)** - Turquoise Blue - Clean gaming layout
-7. **MACRO (Layer 6)** - Pink RGB - Custom utilities (TURBO, JIGGLER, reset)
+### Layer System
+The keymap uses 7 layers with specific naming conventions:
 
-### Special Features
-- **Tap Dance System**: Numbers 1-5 double-hold for layer switching, plus utility dances
-- **RGB Lighting**: 68 LEDs with per-layer HSV colors using RGBLIGHT layers
-- **Split Keyboard**: EE_HANDS for automatic handedness detection
-- **Custom Macros**: TURBO (rapid-fire) and JIGGLER (mouse movement simulator)
-- **Momentary Layers**: Toggle access via bracket keys
-- **Auto-visualization**: PNG generation matching RGB layer colors
-
-### RGB Architecture
-- Each keymap layer has corresponding RGB light layer
-- Specific HSV colors: BASE (Purple), FUNCTION (Green), NUMBERS (Blue), SYMBOLS (Red), SYSTEM (Yellow), GAMING (Turquoise Blue), MACRO (Pink)
-- 68 total LEDs with detailed index mapping in comments
-- Layer state changes trigger automatic RGB updates
-
-## Development Guidelines
-
-### Code Conventions
-- Use `_______` for transparent keys (readability over `KC_TRNS`)
-- Layer aliases defined (`QWERTY_LAYER`, etc.)
-- ASCII art comments for visual layout mapping
-- Structured tap dance implementation with helper functions
-- Comprehensive LED index documentation
-
-### Naming Conventions
-- Tap dances: `TD_X_LY` format (character + layer)
-- Layers: Descriptive names with underscores
-- RGB layers: Match keymap layer naming
-- Custom keycodes: Uppercase descriptive names
-
-### Build Configuration Rules
-- RGBLIGHT_ENABLE must be `yes` for RGB layers
-- RGB_MATRIX_ENABLE must be `no` (conflicts with RGBLIGHT)
-- LTO_ENABLE enabled for firmware size optimization
-- MOUSEKEY_ENABLE required for mouse functionality
-- SPLIT_LAYER_STATE_ENABLE for split layer synchronization
-
-## Common Tasks
-
-### Building Firmware
-```bash
-./build.sh  # Complete build with visualizations
+```c
+enum iris_layers {
+    _BASE,        // QWERTY base layer (Purple)
+    _FUNCTION,    // Function keys (Green) 
+    _NUMBERS,     // Numpad and F-keys (Blue)
+    _SYMBOLS,     // Symbols and navigation (Red)
+    _SYSTEM,      // Mouse/media controls (Yellow)
+    _GAMING,      // Gaming layout (Turquoise)
+    _MACRO,       // Macros and RGB controls (Pink)
+};
 ```
-Handles: QMK repo management, container build, compilation, UF2 generation, keymap visualization.
 
-### Adding New Layer
-1. Add enum to `iris_layers`
-2. Define layer alias (`#define NEW_LAYER _NEW_LAYER`)
-3. Create keymap layout in `keymaps[]`
-4. Add RGB light layer definition with HSV colors
-5. Update `MY_LIGHT_LAYERS` array
-6. Update `layer_state_set_user()` function
+**IMPORTANT**: When adding new layers, follow the 8-step pattern documented in `keymap.c:15-23`.
 
-### Adding Tap Dance
-1. Add to `tap_dance_codes` enum
-2. Implement `finished` and `reset` functions
-3. Add to `tap_dance_actions` array
-4. Use `TD()` macro in keymap
+### Tap Dance System
+Extensive tap dance functionality for layer switching and dual-purpose keys:
+- Numbers 1-5 double-hold switches to respective layers
+- Grave double-tap for Escape
+- Left Shift double-tap for Caps Lock
+- Various utility tap dances for punctuation and media controls
 
-### Flashing Firmware
-1. Double-press reset buttons on both halves
-2. Copy `keebio_iris_rev8_reverie.uf2` to both USB drives
-3. Keyboards auto-reboot with new firmware
+### RGB Lighting
+Per-layer RGB lighting with HSV color definitions matching the visualization colors. RGBLIGHT_ENABLE must be `yes` and RGB_MATRIX_ENABLE must be `no`.
 
-## Keymap Visualization System
+## Build Process Flow
 
-### Automatic Generation
-- Uses keymap-drawer to convert QMK C keymap to JSON, then to SVG/PNG
-- Individual layer PNGs generated with descriptive names using `-s` flag
-- Colors match RGB layer schemes
-- Assets automatically copied to repo root `./assets/`
-- Build produces 12 total files: 1 complete keymap + 6 individual layers (SVG + PNG each)
+1. **Setup**: `build.sh` copies keymap files to build volume
+2. **Container Build**: Creates QMK build environment with all dependencies
+3. **QMK Setup**: Clones/updates QMK firmware, installs requirements, initializes submodules
+4. **Compilation**: Builds firmware UF2 file for `keebio/iris/rev8` keyboard
+5. **Visualization**: Generates keymap diagrams using keymap-drawer tool
+6. **Asset Management**: Copies generated images to assets folder
 
-### Visualization Files
-- `assets/keymap.png` - Complete keyboard layout
-- `assets/keymap-{layer}-layer.png` - Individual layer layouts (QWERTY, NUM, SYM_NAV, MEDIA_MOUSE, GAMING, MACRO)
-- `assets/*.svg` - Source SVG files
+## Development Patterns
 
-**Note**: Individual layer generation is working correctly using `-s` flag for layer selection
+### Adding New Layers
+1. Add enum entry in `_iris_layers` with `_PREFIX` format
+2. Add layer alias `#define LAYER_NAME _LAYER_NAME`
+3. Define HSV color constant
+4. Add to `keymaps[]` array in correct order
+5. Add to `MY_LIGHT_LAYERS` array
+6. Add case to `layer_state_set_user()` function
+7. Add CSS styling in `keymap-drawer-config.yaml`
+8. Add text contrast rule for proper readability
 
-## Container Dependencies
+### Custom Keycodes
+Custom keycodes are defined in `enum custom_keycodes` with `SAFE_RANGE`. Current implementations:
+- `TURBO` - Toggle rapid-fire functionality
+- `JIGGLER` - Toggle mouse jiggling
 
-### Build Tools
-- QMK firmware build environment
-- ARM/AVR cross-compilers (gcc-arm-none-eabi, gcc-avr)
-- Python3 with keymap-drawer
-- ImageMagick for SVG→PNG conversion
-- Git and build essentials
+### Configuration Management
+- Split keyboard settings in `config.h` (EE_HANDS, SPLIT_LAYER_STATE_ENABLE)
+- Feature toggles in `rules.mk` (RGBLIGHT_ENABLE, TAP_DANCE_ENABLE, etc.)
+- Build-time hardware configuration in `entry.sh` (QMK_KEYBOARD, QMK_KEYMAP)
 
-### Important Container Details
-- Fixed environment ensures reproducible builds
-- All visualization tools pre-installed
-- No conditional tool detection needed
-- Build fails fast if dependencies missing
+## Testing and Validation
+
+### Build Validation
+- Build script exits on any failure
+- Container ensures reproducible builds
+- Generated UF2 file should appear in `./build-volume/build-output/`
+
+### Visual Validation  
+- Keymap visualizations automatically generated
+- Individual layer images created for each defined layer
+- Images copied to `./assets/` for README.md display
 
 ## Troubleshooting
 
 ### Build Issues
-- **RGB not working**: Verify RGBLIGHT_ENABLE=yes and RGB_MATRIX_ENABLE=no in rules.mk
-- **Compilation fails**: Check container logs, clean with `rm -rf build-volume/qmk_firmware/.build`
-- **Layer switching broken**: Verify SPLIT_LAYER_STATE_ENABLE in config.h
-- **Visualization missing**: Check keymap-drawer installation and JSON conversion
+- Ensure Podman is running: `podman info`
+- Check container logs for detailed errors
+- Verify all keymap files are present and syntactically correct
+- Clean build artifacts if needed
 
 ### Flashing Issues
-- Both halves must be in bootloader mode (double-tap reset)
-- Try different USB cables/ports
-- Verify UF2 file integrity
-- Check for filesystem mounting issues
+- Both keyboard halves must be in bootloader mode (double-press reset)
+- Verify UF2 file size and integrity
+- Try different USB cables if drives don't appear
 
-### Common Fixes
-- Remove conflicting `keymap.json`/`keymap.yaml` files (handled automatically)
-- Rebuild container: `podman build -t qmkbuild -f Containerfile .`
-- Clean QMK build: `rm -rf build-volume/qmk_firmware`
+## Tools and Dependencies
 
-### Keymap-Drawer Issues
-- **Error**: "Could not find layout 'QWERTY'" - Fixed by explicitly specifying `-k keebio/iris/rev8 -l LAYOUT`
-- **Individual layer generation**: Uses `-s` flag for layer selection (not `--layers` or `-l`)
-- **Layout specification**: Always use CLI overrides to avoid layer name conflicts
-- **Working commands**: See entry.sh lines 90-93 and 105-108 for correct syntax
+### Container Dependencies
+- QMK CLI tools and Python environment
+- AVR/ARM toolchains for compilation
+- keymap-drawer for visualization generation
+- ImageMagick for SVG to PNG conversion
 
-## Repository Context
+### External Tools
+- Podman or Docker for containerization
+- Git for QMK repository management
 
-This is a mature, well-documented keyboard configuration focused on productivity and gaming. The layer system provides efficient access to symbols, navigation, and media controls while maintaining a clean base layer. The containerized build system ensures reproducible compilation, while automatic visualization generation makes the layout easily shareable and documentable.
+## Special Considerations
 
-The keymap represents a sophisticated approach to split keyboard ergonomics with extensive customization and professional-grade tooling.
-
-## Current Development Status
-
-**Keymap Visualization**: ✅ **FULLY FUNCTIONAL** - Both complete keymap and individual layer visualizations are generating correctly. All 12 assets (6 SVG + 6 PNG) are produced automatically by the build system.
-
-**Recent Fixes Applied**:
-- Fixed layout specification conflicts in keymap-drawer CLI commands
-- Corrected individual layer generation to use `-s` flag instead of `--layers`
-- Added explicit `-k keebio/iris/rev8 -l LAYOUT` parameters to prevent layer/layout name confusion
-- All visualization assets now generate successfully and are copied to repo root
-
-**Reference Implementation**: The entry.sh script contains the corrected keymap-drawer commands that serve as a working reference for future modifications.
+- The build process is fully containerized for reproducibility
+- Layer names are automatically extracted from keymap.c enum for visualization
+- RGB lighting colors are coordinated between code and visualization
+- The repository includes QuantumDuck tool for converting Ducky Scripts to QMK macros
+- All generated content is excluded from version control via .gitignore
