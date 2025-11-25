@@ -29,7 +29,6 @@ My Keebio Iris Rev 8 custom keymap called "Reverie" -- a productivity-focused la
 | `6` | `TD(TD_6_BS)` | Single tap: `6`, Double-hold: Switch to BASE layer |
 | `9` | `TD(TD_9_MIN)` | Single tap: `9`, Tap-hold: `-` |
 | `0` | `TD(TD_0_EQ)` | Single tap: `0`, Tap-hold: `=` |
-| `Enter` | `TD(TD_ENT_BSLS)` | Single tap: `Enter`, Tap-hold: `\` |
 | `\` | `TD(TD_BSLS_RSFT)` | Single tap: `\`, Tap-hold: `Right Shift` |
 | `Left Shift` | `TD(TD_LSFT_CAPS)` | Single tap: `Left Shift`, Double tap: `Caps Lock` |
 | `Left Ctrl` (Gaming layer) | `TD(TD_LCTL_GAME)` | Single tap: `Left Ctrl`, Double-hold: Switch to GAMING layer |
